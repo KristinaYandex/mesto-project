@@ -1,0 +1,12 @@
+.popup__form {
+  border-radius: 10px;
+  max-width: 430px;
+  background-color: #FFFFFF;
+  z-index: 10;
+}
+
+@media screen and (max-width: 767px) {
+  .popup__form {
+    max-width: 282px;
+  }
+}
