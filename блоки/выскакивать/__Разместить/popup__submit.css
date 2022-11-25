@@ -23,9 +23,15 @@
   .popup__submit {
     padding-right: 82px;
     padding-left: 82px;
+<<<<<<< HEAD:blocks/popup/__submit/popup__submit.css
     margin-top: 45px;
+=======
+    margin-top: 45px 0 25px 0;
+>>>>>>> a0fa1669753e8e858eee629471c05ac46af2fe59:блоки/выскакивать/__Разместить/popup__submit.css
     margin-bottom: 25px;
     font-size: 14px;
     line-height: 17px;
   }
 }
+    
+    
