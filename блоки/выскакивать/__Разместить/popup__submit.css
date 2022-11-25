@@ -21,10 +21,13 @@
 
 @media screen and (max-width: 767px) {
   .popup__submit {
-    padding: 14px 82px 14px 82px;
-    margin: 45px 0 25px 0;
+    padding-right: 82px;
+    padding-left: 82px;
+    margin-top: 45px 0 25px 0;
+    margin-bottom: 25px;
     font-size: 14px;
     line-height: 17px;
   }
 }
+    
     
