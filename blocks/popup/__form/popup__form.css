@@ -3,10 +3,14 @@
   max-width: 430px;
   background-color: #FFFFFF;
   z-index: 10;
+  padding-left: 36px;
+  padding-right: 36px;
 }
 
 @media screen and (max-width: 767px) {
   .popup__form {
     max-width: 282px;
+    padding-left: 22px;
+    padding-right: 22px;
   }
 }
