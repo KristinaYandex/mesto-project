@@ -1,6 +1,6 @@
 .popup__submit {
-  max-width: 100%;
-  padding: 14px 132px 14px 132px;
+  min-width: 100%;
+  padding: 14px 0;
   background-color: black;
   margin: 48px 0 37px 0;
   font-weight: 400;

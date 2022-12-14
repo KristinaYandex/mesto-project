@@ -24,65 +24,53 @@
     </div>
     <button class="profile__add-button" type="button"></button>
   </section>
-  <section class="elements">
-    <article class="element">
-      <img src="./images/kirill-pershin-1088404-unsplash.jpg" class="element__img-place" alt="Карачаевск">
-      <div class="element__info">
-        <h2 class="element__title">Карачаевск</h2>
-        <button class="element__heart" type="button"></button>
-      </div>
-    </article>
-    <article class="element">
-      <img src="./images/kirill-pershin-1404681-unsplash.jpg" class="element__img-place" alt="Гора Эльбрус">
-      <div class="element__info">
-        <h2 class="element__title">Гора Эльбрус</h2>
-        <button class="element__heart" type="button"></button>
-      </div>
-    </article>
-    <article class="element">
-      <img src="./images/kirill-pershin-1556355-unsplash.jpg" class="element__img-place" alt="Домбай">
-      <div class="element__info">
-        <h2 class="element__title">Домбай</h2>
-        <button class="element__heart" type="button"></button>
-      </div>
-    </article>
-    <article class="element">
-      <img src="./images/kirill-pershin-1404681-unsplash.jpg" class="element__img-place" alt="Гора Эльбрус">
-      <div class="element__info">
-        <h2 class="element__title">Гора Эльбрус</h2>
-        <button class="element__heart" type="button"></button>
-      </div>
-    </article>
-    <article class="element">
-      <img src="./images/kirill-pershin-1556355-unsplash.jpg" class="element__img-place" alt="Домбай">
-      <div class="element__info">
-        <h2 class="element__title">Домбай</h2>
-        <button class="element__heart" type="button"></button>
-      </div>
-    </article>
-    <article class="element">
-      <img src="./images/kirill-pershin-1088404-unsplash.jpg" class="element__img-place" alt="Карачаево-Черкесия">
-      <div class="element__info">
-        <h2 class="element__title">Карачаево-Черкесия</h2>
-        <button class="element__heart" type="button"></button>
-      </div>
-    </article>
-  </section>
+  <section class="elements"></section>
 </main>
   <footer class="footer">
     <p class="footer__copyright">&#169; 2020 Mesto Russia</p>
   </footer>
-  <div class="popup">
+  <div class="popup popup__profile">
     <div class="popup__container">
       <button class="popup__close" type="button"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
       <form class="popup__form" name="form">
-        <input class="popup__text" type="text" name="firstname" value="Жак-Ив Кусто" placeholder="Имя">
-        <input class="popup__text" type="text" name="profession" value="Исследователь океана" placeholder="О себе">
+        <input class="popup__user-name" type="text" name="firstname" value="Жак-Ив Кусто" placeholder="Имя">
+        <input class="popup__user-job" type="text" name="profession" value="Исследователь океана" placeholder="О себе">
         <button class="popup__submit" type="submit">Сохранить</button>
       </form>
     </div>
   </div>
+  <div class="popup popup__place">
+    <div class="popup__container">
+      <button class="popup__close" type="button"></button>
+      <h2 class="popup__title">Новое место</h2>
+      <form class="popup__form" name="form">
+        <input class="popup__place-name" type="text" name="firstname" value="" placeholder="Название">
+        <input class="popup__place-photo" type="text" name="profession" value="" placeholder="Ссылка на фото">
+        <button class="popup__submit" type="submit">Создать</button>
+      </form>
+    </div>
+  </div>
+  <div class="popup popup__photo">
+    <div class="popup__card-image">
+      <button class="popup__close" type="button"></button>
+      <img src="" alt="фото пользователя" class="popup__image">
+      <p class="popup__description"></p>
+    </div>
+  </div>
 </div>
+<template id="templates">
+  <article class="element">
+    <button class="element__trash" type="button"></button>
+    <img src="" class="element__img-place" alt="">
+    <div class="element__info">
+      <h2 class="element__title"></h2>
+      <button class="element__heart" type="button"></button>
+    </div>
+  </article>
+</template>
+<script src="./script.js"></script>
 </body>
 </html>
+
+
