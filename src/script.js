@@ -106,7 +106,6 @@ function handleFormSubmitUser(evt) {
   jobuserProfile.textContent =  jobValue.value;
 
   closePopup(popupProfile);
-  evt.target.reset();
 }
 
 popupProfile.addEventListener('submit', handleFormSubmitUser);
