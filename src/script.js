@@ -54,12 +54,42 @@ popupProfile.addEventListener('mousedown', (evt) => {
     }
 });
 
+document.addEventListener('keydown', (evt) => {
+  if (evt.key == 'Escape') {
+    closePopup(popupProfile);
+  }
+});
+
 buttonClosePlace.addEventListener('click', function() {
   closePopup(popupPlace);
 });
 
+popupPlace.addEventListener('mousedown', (evt) => {
+  if (evt.target.classList.contains('popup_opened')) {
+    closePopup(popupPlace);
+  }
+});
+
+document.addEventListener('keydown', (evt) => {
+  if (evt.key == 'Escape') {
+    closePopup(popupPlace);
+  }
+});
+
 buttonClosePhoto.addEventListener('click', function() {
   closePopup(popupPhoto);
+});
+
+popupPhoto.addEventListener('mousedown', (evt) => {
+  if (evt.target.classList.contains('popup_opened')) {
+    closePopup(popupPhoto);
+  }
+});
+
+document.addEventListener('keydown', (evt) => {
+  if (evt.key == 'Escape') {
+    closePopup(popupPhoto);
+  }
 });
 
 /*Функция добавления карточек*/
@@ -106,6 +136,7 @@ function handleFormSubmitUser(evt) {
   jobuserProfile.textContent =  jobValue.value;
 
   closePopup(popupProfile);
+  evt.target.reset();
 }
 
 popupProfile.addEventListener('submit', handleFormSubmitUser);
@@ -121,3 +152,69 @@ function handleFormSubmitMesto(evt) {
 }
 
 popupPlace.addEventListener('submit', handleFormSubmitMesto);
+
+
+const showError = (formElement, inputElement, errorMessage) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.add('popup__input_type_error');
+  errorElement.textContent = errorMessage;
+  errorElement.classList.add('popup__input-error_active');
+};
+
+const hideError = (formElement, inputElement) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.remove('popup__input_type_error');
+  errorElement.classList.remove('popup__input-error_active');
+  errorElement.textContent = '';
+};
+
+const checkInputValidity = (formElement, inputElement) => {
+  if (inputElement.validity.patternMismatch) {
+    inputElement.setCustomValidity(inputElement.dataset.errorMessage);
+  } else {
+    inputElement.setCustomValidity("");
+  }
+  if (!inputElement.validity.valid) {
+    showError(formElement, inputElement, inputElement.validationMessage);
+  } else {
+    hideError(formElement, inputElement);
+  }
+};
+
+const setEventListeners = (formElement) => {
+  const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
+  const buttonElement = formElement.querySelector('.popup__submit');
+  toggleButtonState(inputList, buttonElement);
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener('input', function () {
+      checkInputValidity(formElement, inputElement);
+      toggleButtonState(inputList, buttonElement);
+    });
+  });
+};
+
+function enableValidation() {
+  const formList = Array.from(document.querySelectorAll('.popup__form'));
+  formList.forEach((formElement) => {
+  formElement.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+  });
+    setEventListeners(formElement);
+});
+}
+
+enableValidation();
+
+function hasInvalidInput(inputList) {
+  return inputList.some((inputElement) => {
+    return !inputElement.validity.valid;
+  });
+}
+
+function toggleButtonState(inputList, buttonElement) {
+  if (hasInvalidInput(inputList)) {
+    buttonElement.classList.add('popup__submit_inactive');
+  } else {
+    buttonElement.classList.remove('popup__submit_inactive');
+  }
+}

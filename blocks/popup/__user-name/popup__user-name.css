@@ -11,13 +11,12 @@
   color: black;
 }
 
-.popup__user-name:nth-last-child(2) {
-  margin-bottom: 0;
-  margin-top: 0;
-}
-
 @media screen and (max-width: 767px) {
   .popup__user-name {
     margin-top: 0;
   }
+}
+
+.popup__user-name:invalid {
+  margin-bottom: 5px;
 }

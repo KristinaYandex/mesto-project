@@ -33,9 +33,11 @@
     <div class="popup__container">
       <button class="popup__close" type="button"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
-      <form class="popup__form" name="form">
-        <input class="popup__user-name" type="text" name="firstname" value="Жак-Ив Кусто" placeholder="Имя">
-        <input class="popup__user-job" type="text" name="profession" value="Исследователь океана" placeholder="О себе">
+      <form class="popup__form" name="form" novalidate>
+        <input id = "name-input" class="popup__input popup__user-name" type="text" required minlength="2" maxlength="40" pattern="^[a-zA-Zа-яёА-ЯЁ\s-]+$" data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы" name="firstname" value="Жак-Ив Кусто" placeholder="Имя">
+        <span class="popup__input-error name-input-error"></span>
+        <input id = "job-input" class="popup__input popup__user-job" type="text" required minlength="2" maxlength="200" pattern="^[a-zA-Zа-яёА-ЯЁ\s-]+$" data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы" name="profession" value="Исследователь океана" placeholder="О себе">
+        <span class="popup__input-error job-input-error"></span>
         <button class="popup__submit" type="submit">Сохранить</button>
       </form>
     </div>
@@ -44,10 +46,12 @@
     <div class="popup__container">
       <button class="popup__close" type="button"></button>
       <h2 class="popup__title">Новое место</h2>
-      <form class="popup__form" name="form">
-        <input class="popup__place-name" type="text" name="firstname" value="" placeholder="Название">
-        <input class="popup__place-photo" type="text" name="profession" value="" placeholder="Ссылка на фото">
-        <button class="popup__submit" type="submit">Создать</button>
+      <form class="popup__form" name="form" novalidate>
+        <input id = "place-input" class="popup__input popup__place-name" type="text" required minlength="2" maxlength="30" pattern="^[a-zA-Zа-яёА-ЯЁ\s-]+$" data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы" value="" name="firstname" placeholder="Название">
+        <span class="popup__input-error place-input-error"></span>
+        <input id = "url-input" class="popup__input popup__place-photo" type="url" required data-error-message="Введите адрес сайта" name="profession" value="" placeholder="Ссылка на фото">
+        <span class="popup__input-error url-input-error"></span>
+        <button class="popup__submit input__btn_disabled" disabled type="submit">Создать</button>
       </form>
     </div>
   </div>

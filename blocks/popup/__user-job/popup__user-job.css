@@ -11,13 +11,12 @@
   color: black;
 }
 
-.popup__text:nth-last-child(2) {
-  margin-bottom: 0;
-  margin-top: 0;
-}
-
 @media screen and (max-width: 767px) {
-  .popup__text {
+  .popup__user-job {
     margin-top: 0;
   }
+}
+
+.popup__user-job:invalid {
+  margin-bottom: 5px;
 }
