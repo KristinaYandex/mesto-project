@@ -34,11 +34,11 @@
       <button class="popup__close" type="button"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
       <form class="popup__form" name="form" novalidate>
-        <input id = "name-input" class="popup__input popup__user-name" type="text" required minlength="2" maxlength="40" pattern="^[a-zA-Zа-яёА-ЯЁ\s-]+$" data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы" name="firstname" value="Жак-Ив Кусто" placeholder="Имя">
+        <input id = "name-input" class="popup__input popup__input_invalid popup__user-name" type="text" required minlength="2" maxlength="40" pattern="^[a-zA-Zа-яёА-ЯЁ\s-]+$" data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы" name="firstname" value="Жак-Ив Кусто" placeholder="Имя">
         <span class="popup__input-error name-input-error"></span>
-        <input id = "job-input" class="popup__input popup__user-job" type="text" required minlength="2" maxlength="200" pattern="^[a-zA-Zа-яёА-ЯЁ\s-]+$" data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы" name="profession" value="Исследователь океана" placeholder="О себе">
+        <input id = "job-input" class="popup__input popup__input_invalid popup__user-job" type="text" required minlength="2" maxlength="200" pattern="^[a-zA-Zа-яёА-ЯЁ\s-]+$" data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы" name="profession" value="Исследователь океана" placeholder="О себе">
         <span class="popup__input-error job-input-error"></span>
-        <button class="popup__submit" type="submit">Сохранить</button>
+        <button class="popup__submit input__btn_disabled" type="submit">Сохранить</button>
       </form>
     </div>
   </div>
@@ -51,7 +51,7 @@
         <span class="popup__input-error place-input-error"></span>
         <input id = "url-input" class="popup__input popup__place-photo" type="url" required data-error-message="Введите адрес сайта" name="profession" value="" placeholder="Ссылка на фото">
         <span class="popup__input-error url-input-error"></span>
-        <button class="popup__submit input__btn_disabled" disabled type="submit">Создать</button>
+        <button class="popup__submit" type="submit">Создать</button>
       </form>
     </div>
   </div>
