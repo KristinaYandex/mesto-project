@@ -1,8 +1,0 @@
-.popup__input-error_active {
-  display: inline-block;
-  margin-bottom: 13px;
-}
-
-.popup__input-error_active:nth-last-child(2) {
-  margin-bottom: 0;
-}
