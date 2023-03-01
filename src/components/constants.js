@@ -27,9 +27,13 @@ const initialCards = [
 
 /*Объявления констант*/
 /*Попапы*/
-const popupProfile = document.querySelector('.popup_profile');
-const popupPlace = document.querySelector('.popup_place');
-const popupPhoto = document.querySelector('.popup_photo');
+const popupProfile = document.querySelector('.popup-profile');
+const popupPlace = document.querySelector('.popup-place');
+const popupPhoto = document.querySelector('.popup-photo');
+/*Форма попапа добавления карточки*/
+const popupForm = popupPlace.querySelector('.popup__form');
+/*Кнопка добавления карточи*/
+const popupSubmit = popupPlace.querySelector('.popup__submit');
 /*Кнопки открытия попапов*/
 const buttonEdit = document.querySelector('.profile__edit-button');
 const buttonAdd = document.querySelector('.profile__add-button');
@@ -62,5 +66,5 @@ const settings = {
   errorClass: 'popup__input-error_active'
 }
 
-export { settings, initialCards, popupProfile, popupPlace, popupPhoto, buttonEdit, buttonAdd, buttonCloseProfile, buttonClosePlace, buttonClosePhoto,
+export { settings, initialCards, popupProfile, popupPlace, popupPhoto, popupForm, buttonEdit, buttonAdd, popupSubmit, buttonCloseProfile, buttonClosePlace, buttonClosePhoto,
   cardContainer, userTemplate, namePlaceInput, linkPlaceInput, popupImage, popupDescription, nameuserProfile, jobuserProfile, nameValue, jobValue };

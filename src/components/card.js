@@ -1,5 +1,5 @@
-import { initialCards, popupPhoto, cardContainer, userTemplate, popupImage, popupDescription } from './constants.js'
-import { openPopup } from './modal.js'
+import { initialCards, popupPhoto, popupPlace, userTemplate, popupImage, popupDescription, cardContainer, namePlaceInput, linkPlaceInput } from './constants.js'
+import { openPopup, closePopup } from './modal.js'
 
 /*Функция добавления карточек*/
 function createCard(name, link) {
@@ -33,8 +33,18 @@ function createCard(name, link) {
   return userElement;
 };
 
+/*Добавление карточки через попап*/
+function handleFormSubmitMesto(evt) {
+  evt.preventDefault();
+
+  cardContainer.prepend(createCard(namePlaceInput.value, linkPlaceInput.value));
+
+  closePopup(popupPlace);
+  evt.target.reset();
+}
+
 initialCards.forEach(function (item) {
   cardContainer.append(createCard(item.name, item.link));
 });
 
-export { createCard };
+export { handleFormSubmitMesto };

@@ -1,9 +1,11 @@
 import './pages/index.css';
 
-import { enableValidation } from './components/validate.js'
+import { enableValidation, disableSubmitButton, hideInputError } from './components/validate.js'
 import { openPopup, closePopup } from './components/modal.js'
-import { handleFormSubmitMesto, handleFormSubmitUser } from './components/utils.js'
-import { settings, popupProfile, popupPlace, popupPhoto, buttonEdit, buttonAdd, buttonCloseProfile, buttonClosePlace, buttonClosePhoto } from './components/constants.js'
+import { handleFormSubmitMesto } from './components/card.js'
+import { settings, popupProfile, popupPlace, popupPhoto, popupForm, popupSubmit, buttonEdit, buttonAdd, buttonCloseProfile,
+  buttonClosePlace, buttonClosePhoto, nameuserProfile, jobuserProfile, nameValue, jobValue } from './components/constants.js'
+
 
 /*Вызов функции enableValidation*/
 enableValidation(settings);
@@ -14,6 +16,9 @@ buttonEdit.addEventListener('click', function() {
 });
 
 buttonAdd.addEventListener('click', function() {
+  disableSubmitButton(settings, popupSubmit);
+  hideInputError(popupPlace, settings);
+  popupForm.reset();
   openPopup(popupPlace);
 });
 
@@ -36,11 +41,6 @@ popupProfile.addEventListener('mousedown', (evt) => {
   }
 });
 
-document.addEventListener('keydown', (evt) => {
-if (evt.key == 'Escape') {
-  closePopup(popupProfile);
-}
-});
 
 popupPlace.addEventListener('mousedown', (evt) => {
 if (evt.target.classList.contains('popup_opened')) {
@@ -48,11 +48,6 @@ if (evt.target.classList.contains('popup_opened')) {
 }
 });
 
-document.addEventListener('keydown', (evt) => {
-if (evt.key == 'Escape') {
-  closePopup(popupPlace);
-}
-});
 
 popupPhoto.addEventListener('mousedown', (evt) => {
 if (evt.target.classList.contains('popup_opened')) {
@@ -60,14 +55,18 @@ if (evt.target.classList.contains('popup_opened')) {
 }
 });
 
-document.addEventListener('keydown', (evt) => {
-if (evt.key == 'Escape') {
-  closePopup(popupPhoto);
+/*Добавление карточки через попап*/
+popupPlace.addEventListener('submit', handleFormSubmitMesto);
+
+/*Редактирование информации о пользователе*/
+function handleFormSubmitUser(evt) {
+  evt.preventDefault();
+
+  nameuserProfile.textContent = nameValue.value;
+  jobuserProfile.textContent =  jobValue.value;
+
+  closePopup(popupProfile);
 }
-});
 
 /*Редактирование информации о пользователе*/
 popupProfile.addEventListener('submit', handleFormSubmitUser);
-
-/*Добавление карточки через попап*/
-popupPlace.addEventListener('submit', handleFormSubmitMesto);

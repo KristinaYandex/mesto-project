@@ -65,4 +65,18 @@ function enableValidation() {
 });
 }
 
-export { enableValidation };
+/*Функция блокировки кнопки отправки при добавлении карточки*/
+function disableSubmitButton(settings, popupSubmit){
+  popupSubmit.disabled = true;
+  popupSubmit.classList.add(settings.inactiveButtonClass);
+}
+
+/*Функция очищения формы от ошибок, если пользователь введет некорректные данные и закроет попап, то ошибок не будет видно*/
+function hideInputError(formElement, settings) {
+  const inputList = Array.from(formElement.querySelectorAll(settings.inputSelector));
+  inputList.forEach(inputElement => {
+    hideError(formElement, inputElement, settings);
+  });
+}
+
+export { enableValidation, disableSubmitButton, hideInputError };
