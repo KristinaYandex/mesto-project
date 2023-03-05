@@ -1,30 +1,3 @@
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-
 /*Объявления констант*/
 /*Попапы*/
 const popupProfile = document.querySelector('.popup-profile');
@@ -56,6 +29,7 @@ const jobValue = popupProfile.querySelector('.popup__user-job');
 /*Добавление карточки через попап*/
 const namePlaceInput = popupPlace.querySelector('.popup__place-name');
 const linkPlaceInput = popupPlace.querySelector('.popup__place-photo');
+const myAccount = document.querySelector('.profile');
 
 const settings = {
   formSelector: '.popup__form',
@@ -66,5 +40,5 @@ const settings = {
   errorClass: 'popup__input-error_active'
 }
 
-export { settings, initialCards, popupProfile, popupPlace, popupPhoto, popupForm, buttonEdit, buttonAdd, popupSubmit, buttonCloseProfile, buttonClosePlace, buttonClosePhoto,
+export { myAccount, settings, popupProfile, popupPlace, popupPhoto, popupForm, buttonEdit, buttonAdd, popupSubmit, buttonCloseProfile, buttonClosePlace, buttonClosePhoto,
   cardContainer, userTemplate, namePlaceInput, linkPlaceInput, popupImage, popupDescription, nameuserProfile, jobuserProfile, nameValue, jobValue };
