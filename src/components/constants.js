@@ -29,7 +29,6 @@ const jobValue = popupProfile.querySelector('.popup__user-job');
 /*Добавление карточки через попап*/
 const namePlaceInput = popupPlace.querySelector('.popup__place-name');
 const linkPlaceInput = popupPlace.querySelector('.popup__place-photo');
-const myAccount = document.querySelector('.profile');
 
 const settings = {
   formSelector: '.popup__form',
@@ -40,5 +39,5 @@ const settings = {
   errorClass: 'popup__input-error_active'
 }
 
-export { myAccount, settings, popupProfile, popupPlace, popupPhoto, popupForm, buttonEdit, buttonAdd, popupSubmit, buttonCloseProfile, buttonClosePlace, buttonClosePhoto,
+export { settings, popupProfile, popupPlace, popupPhoto, popupForm, buttonEdit, buttonAdd, popupSubmit, buttonCloseProfile, buttonClosePlace, buttonClosePhoto,
   cardContainer, userTemplate, namePlaceInput, linkPlaceInput, popupImage, popupDescription, nameuserProfile, jobuserProfile, nameValue, jobValue };

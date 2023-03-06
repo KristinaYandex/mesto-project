@@ -1,9 +1,9 @@
-import { myAccount, popupPhoto, popupPlace, userTemplate, popupImage, popupDescription, cardContainer, namePlaceInput, linkPlaceInput } from './constants.js'
+import { popupPhoto, popupPlace, userTemplate, popupImage, popupDescription, cardContainer, namePlaceInput, linkPlaceInput } from './constants.js'
 import { openPopup, closePopup } from './modal.js'
 import { addNewCard, deleteCards, putLike, deleteLike } from './API.js'
-
+import { myAccount } from '../index.js'
 /*Функция добавления карточек*/
-function createCard(name, link, likes, owner, id) {
+function createCard(link, name, likes, owner, id) {
   const userElement = userTemplate.querySelector('.element').cloneNode(true);
   const cardDelete = userElement.querySelector('.element__trash'); /*Кнопка удаления карточек*/
   const elementHeartCounter = userElement.querySelector('.element__heart-counter'); /Счётчик лайков*/
@@ -15,24 +15,26 @@ function createCard(name, link, likes, owner, id) {
   /*Лайки карточек*/
   const like = userElement.querySelector('.element__heart');
   elementHeartCounter.textContent = likes.length; /*передаем в счетчик лайков длину массива лайков*/
-  likes.ForEach(() => {
-    if (likes._id === myAccount._id) {
+  likes.forEach(() => {
+    if (likes._id === myAccount) {
       like.classList.add('element__heart_active');
     }
   })
+
   like.addEventListener('click', function(evt) {
-    if (evt.target.classList.contains('element__heart_active')) {
-      deleteLike(id)
+    if (!evt.target.classList.contains('element__heart_active')) {
+      putLike(id)
         .then((res) => {
-          evt.target.classList.remove('element__heart_active');
+          evt.target.classList.toggle('element__heart_active');
           elementHeartCounter.textContent = res.likes.length;
         })
         .catch((err) => {
           console.log(err);
         });
-      putLike(id)
+    } else {
+      deleteLike(id)
         .then((res) => {
-          evt.target.classList.toggle('element__heart_active');
+          evt.target.classList.remove('element__heart_active');
           elementHeartCounter.textContent = res.likes.length;
         })
         .catch((err) => {
@@ -49,17 +51,17 @@ function createCard(name, link, likes, owner, id) {
     openPopup(popupPhoto);
   });
   /*Удаление карточек*/
-  if (myAccount._id !== owner._id) {
-    cardDelete.classList.add('element__trash_inactive');
+  if (myAccount === owner) {
+    cardDelete.addEventListener('click', (e) => {
+      deleteCards(id)
+        .then (() => {
+          e.target.closest('.element').remove();
+        })
+        .catch((err) => {
+          console.log(err); // выводим ошибку в консоль, если запрос неуспешный
+        });
+    });
   }
-
-  cardDelete.addEventListener('click', function() {
-    deleteCards(res._id)
-      .then (() => {
-        const part = cardDelete.closest('.element');
-        part.remove();
-      })
-  });
   return userElement;
 };
 
@@ -75,3 +77,17 @@ function handleFormSubmitMesto(evt) {
 }
 
 export { handleFormSubmitMesto, createCard };
+
+/*if (myAccount._id !== owner._id) {
+  cardDelete.classList.add('element__trash_inactive');
+}
+
+cardDelete.addEventListener('click', (e) => {
+  deleteCards(id)
+    .then (() => {
+      e.target.closest('.element').remove();
+    })
+    .catch((err) => {
+      console.log(err); // выводим ошибку в консоль, если запрос неуспешный
+    });
+});*/

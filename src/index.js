@@ -3,15 +3,15 @@ import './pages/index.css';
 import { enableValidation, disableSubmitButton, hideInputError } from './components/validate.js'
 import { openPopup, closePopup } from './components/modal.js'
 import { handleFormSubmitMesto, createCard } from './components/card.js'
-import { myAccount, settings, popupProfile, popupPlace, popupPhoto, popupForm, popupSubmit, buttonEdit, buttonAdd, buttonCloseProfile,
+import { settings, popupProfile, popupPlace, popupPhoto, popupForm, popupSubmit, buttonEdit, buttonAdd, buttonCloseProfile,
   buttonClosePlace, buttonClosePhoto, nameuserProfile, jobuserProfile, nameValue, jobValue, cardContainer } from './components/constants.js'
 import { getUserProfile, updateUserProfile, getCards } from './components/API.js'
-
+let myAccount;
 Promise.all([getUserProfile(), getCards()])
   .then(([users, cards]) => {
     nameuserProfile.textContent = users.name;
     jobuserProfile.textContent = users.about;
-    myAccount.id = users._id;
+    myAccount = users._id;
     cards.forEach((card) => {
       cardContainer.prepend(createCard(card.link, card.name, card.likes, card._id, card.owner_id))
     });
@@ -85,3 +85,5 @@ function handleFormSubmitUser(evt) {
 
 /*Редактирование информации о пользователе*/
 popupProfile.addEventListener('submit', handleFormSubmitUser);
+
+export { myAccount };

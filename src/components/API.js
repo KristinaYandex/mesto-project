@@ -63,36 +63,33 @@ function addNewCard(elementImgPlace, elementTitle) {
 }
 
 /*Удаление карточек с сервера*/
-function deleteCards(cardId) {
-  return fetch('https://nomoreparties.co/v1/plus-cohort-20/cards/${cardId}', {
+function deleteCards(id) {
+  return fetch('https://nomoreparties.co/v1/plus-cohort-20/cards/${id}', {
     method: 'DELETE',
     headers: {
       authorization: '9a34fda2-8e98-4dd6-868d-a04801378552',
-      'Content-Type': 'application/json'
     }
   })
   .then(res => serverResponse(res));
 }
 
 /*Постановка лайка*/
-function putLike(cardId) {
-  return fetch('https://nomoreparties.co/v1/cohortId/cards/likes/cardId', {
+function putLike(_id) {
+  return fetch('https://nomoreparties.co/v1/plus-cohort-20/cards/likes/${id}', {
     method: 'PUT',
     headers: {
-      authorization: '9a34fda2-8e98-4dd6-868d-a04801378552',
-      'Content-Type': 'application/json'
+      authorization: '9a34fda2-8e98-4dd6-868d-a04801378552'
     }
   })
   .then(res => serverResponse(res));
 }
 
 /*Удалить лайк*/
-function deleteLike(cardId) {
-  return fetch('https://nomoreparties.co/v1/cohortId/cards/likes/cardId', {
+function deleteLike(_id) {
+  return fetch('https://nomoreparties.co/v1/plus-cohort-20/cards/likes/${id}', {
     method: 'DELETE',
     headers: {
-      authorization: '9a34fda2-8e98-4dd6-868d-a04801378552',
-      'Content-Type': 'application/json'
+      authorization: '9a34fda2-8e98-4dd6-868d-a04801378552'
     }
   })
   .then(res => serverResponse(res));
