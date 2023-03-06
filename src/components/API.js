@@ -74,7 +74,7 @@ function deleteCards(id) {
 }
 
 /*Постановка лайка*/
-function putLike(_id) {
+function putLike(id) {
   return fetch('https://nomoreparties.co/v1/plus-cohort-20/cards/likes/${id}', {
     method: 'PUT',
     headers: {
@@ -85,7 +85,7 @@ function putLike(_id) {
 }
 
 /*Удалить лайк*/
-function deleteLike(_id) {
+function deleteLike(id) {
   return fetch('https://nomoreparties.co/v1/plus-cohort-20/cards/likes/${id}', {
     method: 'DELETE',
     headers: {
