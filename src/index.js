@@ -6,11 +6,9 @@ import { handleFormSubmitMesto, createCard } from './components/card.js'
 import { settings, popupProfile, popupPlace, popupPhoto, popupForm, popupSubmit, buttonEdit, buttonAdd, buttonCloseProfile,
   buttonClosePlace, buttonClosePhoto, nameuserProfile, jobuserProfile, nameValue, jobValue, cardContainer } from './components/constants.js'
 import { getUserProfile, updateUserProfile, getCards } from './components/API.js'
-/*let myAccount;*/
 
 Promise.all([getUserProfile(), getCards()])
   .then(([users, cards]) => {
-    /*myAccount = users._id;*/
     nameuserProfile.textContent = users.name;
     jobuserProfile.textContent = users.about;
     cards.forEach((card) => {
@@ -85,5 +83,3 @@ function handleFormSubmitUser() {
 
 /*Редактирование информации о пользователе*/
 popupProfile.addEventListener('submit', handleFormSubmitUser);
-
-/*export { myAccount };*/

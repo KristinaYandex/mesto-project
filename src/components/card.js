@@ -1,7 +1,6 @@
 import { popupPhoto, popupPlace, userTemplate, popupImage, popupDescription, cardContainer, namePlaceInput, linkPlaceInput } from './constants.js'
 import { openPopup, closePopup } from './modal.js'
 import { addNewCard, deleteCards, putLike, deleteLike } from './API.js'
-/*import { myAccount } from '../index.js'*/
 
 const myProfile = {
   id: '',
