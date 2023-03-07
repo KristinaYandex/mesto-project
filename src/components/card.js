@@ -1,7 +1,13 @@
 import { popupPhoto, popupPlace, userTemplate, popupImage, popupDescription, cardContainer, namePlaceInput, linkPlaceInput } from './constants.js'
 import { openPopup, closePopup } from './modal.js'
 import { addNewCard, deleteCards, putLike, deleteLike } from './API.js'
-import { myAccount } from '../index.js'
+/*import { myAccount } from '../index.js'*/
+
+const myProfile = {
+  id: '',
+  name: ''
+};
+
 /*Функция добавления карточек*/
 function createCard(link, name, likes, owner, id) {
   const userElement = userTemplate.querySelector('.element').cloneNode(true);
@@ -13,20 +19,15 @@ function createCard(link, name, likes, owner, id) {
   elementImgPlace.src = link;
   elementImgPlace.alt = name;
   /*Лайки карточек*/
-  const like = userElement.querySelector('.element__heart');
+  const mylike = userElement.querySelector('.element__heart');
   elementHeartCounter.textContent = likes.length; /*передаем в счетчик лайков длину массива лайков*/
-  likes.forEach(() => {
-    if (likes._id === myAccount) {
-      like.classList.add('element__heart_active');
-    }
-  })
 
-  like.addEventListener('click', function(evt) {
+  mylike.addEventListener('click', function(evt) {
     if (!evt.target.classList.contains('element__heart_active')) {
       putLike(id)
         .then((res) => {
-          evt.target.classList.toggle('element__heart_active');
           elementHeartCounter.textContent = res.likes.length;
+          evt.target.classList.toggle('element__heart_active');
         })
         .catch((err) => {
           console.log(err);
@@ -34,14 +35,19 @@ function createCard(link, name, likes, owner, id) {
     } else {
       deleteLike(id)
         .then((res) => {
-          evt.target.classList.remove('element__heart_active');
           elementHeartCounter.textContent = res.likes.length;
+          evt.target.classList.remove('element__heart_active');
         })
         .catch((err) => {
           console.log(err);
         });
     }
   });
+  likes.forEach((like) => {
+    if (like.id === myProfile.id) {
+      mylike.classList.add('element__heart_active');
+    }
+  })
 
   /*Открытие карточек*/
   elementImgPlace.addEventListener('click', function() {
@@ -50,18 +56,21 @@ function createCard(link, name, likes, owner, id) {
     popupDescription.textContent = name;
     openPopup(popupPhoto);
   });
-  /*Удаление карточек*/
-  if (myAccount === owner) {
-    cardDelete.addEventListener('click', (e) => {
-      deleteCards(id)
-        .then (() => {
-          e.target.closest('.element').remove();
-        })
-        .catch((err) => {
-          console.log(err); // выводим ошибку в консоль, если запрос неуспешный
-        });
-    });
+
+  if (owner !== myProfile.id) {
+    cardDelete.classList.add('element__trash_inactive');
   }
+
+  /*Удаление карточек*/
+  cardDelete.addEventListener('click', (e) => {
+    deleteCards(id)
+      .then (() => {
+        e.target.closest('.element').remove();
+      })
+      .catch((err) => {
+        console.log(err); // выводим ошибку в консоль, если запрос неуспешный
+      });
+  });
   return userElement;
 };
 
@@ -71,23 +80,18 @@ function handleFormSubmitMesto(evt) {
   return addNewCard(namePlaceInput.value, linkPlaceInput.value)
     .then((res) => {
       closePopup(popupPlace);
-      cardContainer.prepend(createCard(res.link, res.name, res.likes, res._id, res.owner_id));
+      cardContainer.prepend(createCard(res.link, res.name, res.likes, res.owner_id, res._id));
       evt.target.reset();
     })
 }
 
 export { handleFormSubmitMesto, createCard };
 
-/*if (myAccount._id !== owner._id) {
-  cardDelete.classList.add('element__trash_inactive');
-}
 
-cardDelete.addEventListener('click', (e) => {
-  deleteCards(id)
-    .then (() => {
-      e.target.closest('.element').remove();
-    })
-    .catch((err) => {
-      console.log(err); // выводим ошибку в консоль, если запрос неуспешный
-    });
-});*/
+/*if (myAccount !== owner) {
+  cardDelete.classList.add('element__trash_inactive');
+}*/
+
+/*if(owner !== myProfile.id) {
+  cardDelete.classList.add('element__trash_inactive');
+}*/

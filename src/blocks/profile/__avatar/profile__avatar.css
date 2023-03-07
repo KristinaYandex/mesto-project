@@ -6,6 +6,8 @@
   object-fit: cover;
   object-position: center;
   padding: 0;
+  z-index: 5;
+  position: relative;
 }
 
 @media screen and (max-width: 767px) {

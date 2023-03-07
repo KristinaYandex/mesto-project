@@ -8,12 +8,20 @@ function serverResponse(res) {
   return Promise.reject(`Ошибка: ${res.status}`);
 }
 
+const config = {
+  baseUrl: 'https://nomoreparties.co/v1/plus-cohort-20',
+  headers: {
+    authorization: '9a34fda2-8e98-4dd6-868d-a04801378552',
+    "Content-Type": 'application/json',
+  },
+};
+
 /*Запрос информации о пользователе*/
 function getUserProfile() {
-  return fetch('https://nomoreparties.co/v1/plus-cohort-20/users/me', {
+  return fetch(`${config.baseUrl}/users/me`, {
     method: 'GET',
     headers: {
-      authorization: '9a34fda2-8e98-4dd6-868d-a04801378552'
+      authorization: config.headers.authorization
     }
   })
   .then(res => serverResponse(res));
@@ -21,12 +29,9 @@ function getUserProfile() {
 
 /*Обновление информации о пользователе*/
 function updateUserProfile(nameuserProfile, jobuserProfile) {
-  return fetch('https://nomoreparties.co/v1/plus-cohort-20/users/me', {
+  return fetch(`${config.baseUrl}/users/me`, {
     method: 'PATCH',
-    headers: {
-      authorization: '9a34fda2-8e98-4dd6-868d-a04801378552',
-      'Content-Type': 'application/json'
-    },
+    headers: config.headers,
     body: JSON.stringify ({
       name: nameuserProfile,
       about: jobuserProfile
@@ -64,32 +69,32 @@ function addNewCard(elementImgPlace, elementTitle) {
 
 /*Удаление карточек с сервера*/
 function deleteCards(id) {
-  return fetch('https://nomoreparties.co/v1/plus-cohort-20/cards/${id}', {
+  return fetch(`${config.baseUrl}/cards/${id}`, {
     method: 'DELETE',
     headers: {
-      authorization: '9a34fda2-8e98-4dd6-868d-a04801378552',
+      authorization: config.headers.authorization
     }
   })
   .then(res => serverResponse(res));
 }
 
 /*Постановка лайка*/
-function putLike(_id) {
-  return fetch('https://nomoreparties.co/v1/plus-cohort-20/cards/likes/${id}', {
+function putLike(id) {
+  return fetch(`${config.baseUrl}/cards/likes/${id}`, {
     method: 'PUT',
     headers: {
-      authorization: '9a34fda2-8e98-4dd6-868d-a04801378552'
+      authorization: config.headers.authorization
     }
   })
   .then(res => serverResponse(res));
 }
 
 /*Удалить лайк*/
-function deleteLike(_id) {
-  return fetch('https://nomoreparties.co/v1/plus-cohort-20/cards/likes/${id}', {
+function deleteLike(id) {
+  return fetch(`${config.baseUrl}/cards/likes/${id}`, {
     method: 'DELETE',
     headers: {
-      authorization: '9a34fda2-8e98-4dd6-868d-a04801378552'
+      authorization: config.headers.authorization
     }
   })
   .then(res => serverResponse(res));

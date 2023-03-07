@@ -6,14 +6,15 @@ import { handleFormSubmitMesto, createCard } from './components/card.js'
 import { settings, popupProfile, popupPlace, popupPhoto, popupForm, popupSubmit, buttonEdit, buttonAdd, buttonCloseProfile,
   buttonClosePlace, buttonClosePhoto, nameuserProfile, jobuserProfile, nameValue, jobValue, cardContainer } from './components/constants.js'
 import { getUserProfile, updateUserProfile, getCards } from './components/API.js'
-let myAccount;
+/*let myAccount;*/
+
 Promise.all([getUserProfile(), getCards()])
   .then(([users, cards]) => {
+    /*myAccount = users._id;*/
     nameuserProfile.textContent = users.name;
     jobuserProfile.textContent = users.about;
-    myAccount = users._id;
     cards.forEach((card) => {
-      cardContainer.prepend(createCard(card.link, card.name, card.likes, card._id, card.owner_id))
+      cardContainer.prepend(createCard(card.link, card.name, card.likes, card.owner_id, card._id))
     });
   })
   .catch((err) => {
@@ -72,8 +73,7 @@ if (evt.target.classList.contains('popup_opened')) {
 popupPlace.addEventListener('submit', handleFormSubmitMesto);
 
 /*Редактирование информации о пользователе*/
-function handleFormSubmitUser(evt) {
-  evt.preventDefault();
+function handleFormSubmitUser() {
   return updateUserProfile(nameValue.value, jobValue.value)
     .then((obj) => {
       nameuserProfile.textContent = obj.name;
@@ -86,4 +86,4 @@ function handleFormSubmitUser(evt) {
 /*Редактирование информации о пользователе*/
 popupProfile.addEventListener('submit', handleFormSubmitUser);
 
-export { myAccount };
+/*export { myAccount };*/
