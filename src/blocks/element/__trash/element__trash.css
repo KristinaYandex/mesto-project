@@ -12,3 +12,7 @@
   width: 18px;
   height: 19px;
 }
+
+.element__trash:hover {
+  cursor: pointer;
+}

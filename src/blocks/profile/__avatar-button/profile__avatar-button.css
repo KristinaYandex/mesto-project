@@ -15,6 +15,7 @@
 .profile__avatar-button:hover {
   cursor: pointer;
   opacity: 0.8;
+  transition-duration: 0.5s;
 }
 
 

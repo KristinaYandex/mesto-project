@@ -1,5 +1,3 @@
-import { createCard } from './card.JS'
-
 /*Функция проверки ответа от сервера на корректность*/
 function serverResponse(res) {
   if (res.ok) {
@@ -35,6 +33,18 @@ function updateUserProfile(nameuserProfile, jobuserProfile) {
     body: JSON.stringify ({
       name: nameuserProfile,
       about: jobuserProfile
+    })
+  })
+  .then(res => serverResponse(res));
+}
+
+/*Обновление аватара*/
+function updateUserAvatar(avataruserProfile) {
+  return fetch(`${config.baseUrl}/users/me/avatar`, {
+    method: 'PATCH',
+    headers: config.headers,
+    body: JSON.stringify ({
+      avatar: avataruserProfile
     })
   })
   .then(res => serverResponse(res));
@@ -100,4 +110,4 @@ function deleteLike(id) {
   .then(res => serverResponse(res));
 }
 
-export { updateUserProfile, getUserProfile, getCards, addNewCard, deleteCards, putLike, deleteLike };
+export { updateUserProfile, getUserProfile,  updateUserAvatar, getCards, addNewCard, deleteCards, putLike, deleteLike };

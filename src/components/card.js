@@ -1,11 +1,7 @@
-import { popupPhoto, popupPlace, userTemplate, popupImage, popupDescription, cardContainer, namePlaceInput, linkPlaceInput } from './constants.js'
+import { popupPhoto, popupPlace, userTemplate, popupImage, popupDescription, cardContainer, namePlaceInput, linkPlaceInput, popupSubmitCard } from './constants.js'
 import { openPopup, closePopup } from './modal.js'
-import { addNewCard, deleteCards, putLike, deleteLike } from './API.js'
-
-const myProfile = {
-  id: '',
-  name: ''
-};
+import { addNewCard, deleteCards, putLike, deleteLike } from './api.js'
+import { myProfile } from '../index.js'
 
 /*Функция добавления карточек*/
 function createCard(link, name, likes, owner, id) {
@@ -42,8 +38,8 @@ function createCard(link, name, likes, owner, id) {
         });
     }
   });
-  likes.forEach((like) => {
-    if (like.id === myProfile.id) {
+  likes.forEach((user) => {
+    if (user._id === myProfile) {
       mylike.classList.add('element__heart_active');
     }
   })
@@ -56,7 +52,7 @@ function createCard(link, name, likes, owner, id) {
     openPopup(popupPhoto);
   });
 
-  if (owner !== myProfile.id) {
+  if (owner !== myProfile) {
     cardDelete.classList.add('element__trash_inactive');
   }
 
@@ -75,22 +71,20 @@ function createCard(link, name, likes, owner, id) {
 
 /*Добавление карточки через попап*/
 function handleFormSubmitMesto(evt) {
+  popupSubmitCard.textContent = "Сохранение...";
   evt.preventDefault();
   return addNewCard(namePlaceInput.value, linkPlaceInput.value)
     .then((res) => {
       closePopup(popupPlace);
-      cardContainer.prepend(createCard(res.link, res.name, res.likes, res.owner_id, res._id));
+      cardContainer.prepend(createCard(res.link, res.name, res.likes, res.owner._id, res._id));
       evt.target.reset();
     })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      popupSubmitCard.textContent = "Сохранить";
+    });
 }
 
 export { handleFormSubmitMesto, createCard };
-
-
-/*if (myAccount !== owner) {
-  cardDelete.classList.add('element__trash_inactive');
-}*/
-
-/*if(owner !== myProfile.id) {
-  cardDelete.classList.add('element__trash_inactive');
-}*/
