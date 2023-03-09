@@ -5,6 +5,12 @@ function closeEsc(evt) {
     closePopup(popupOpened);
   }
 }
+/*Закрытие по клику на оверлей*/
+function onClickByOverlay (evt) {
+  if (evt.target.classList.contains('popup_opened')) {
+  closePopup(evt.target);
+  }
+ }
 
 /*Функция открытия попапов*/
 function openPopup(popup) {
@@ -15,7 +21,7 @@ function openPopup(popup) {
 /*Функция закрытия попапов*/
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
-  document.addEventListener('keydown', closeEsc);
+  document.removeEventListener('keydown', closeEsc);
 }
 
-export { openPopup, closePopup };
+export { openPopup, closePopup, onClickByOverlay };

@@ -1,9 +1,9 @@
 import './pages/index.css';
 
-import { enableValidation, disableSubmitButton, hideInputError } from './components/validate.js'
-import { openPopup, closePopup } from './components/modal.js'
+import { enableValidation, disableSubmitButton /*hideInputError*/ } from './components/validate.js'
+import { openPopup, closePopup, onClickByOverlay } from './components/modal.js'
 import { handleFormSubmitMesto, createCard } from './components/card.js'
-import { settings, popupProfile, popupPlace, popupPhoto, popupAvatar, popupForm, popupSubmitCard, buttonEdit, buttonAdd, buttonAvatar, buttonCloseProfile, popupSubmitUser, popupSubmitAvatar,
+import { settings, popupProfile, popupPlace, popupPhoto, popupAvatar, buttonEdit, buttonAdd, buttonAvatar, popupForm, popupSubmitCard, buttonCloseProfile, popupSubmitUser, popupSubmitAvatar,
   buttonClosePlace, buttonClosePhoto, buttonCloseAvatar, nameuserProfile, jobuserProfile, avataruserProfile, nameValue, jobValue, avatarValue, cardContainer } from './components/constants.js'
 import { getUserProfile, updateUserProfile, getCards, updateUserAvatar } from './components/api.js'
 
@@ -14,7 +14,7 @@ Promise.all([getUserProfile(), getCards()])
     jobuserProfile.textContent = users.about;
     avataruserProfile.src = users.avatar;
     myProfile = users._id;
-    cards.forEach((card) => {
+    cards.reverse().forEach((card) => {
       cardContainer.prepend(createCard(card.link, card.name, card.likes, card.owner._id, card._id))
     });
   })
@@ -24,68 +24,6 @@ Promise.all([getUserProfile(), getCards()])
 
 /*Вызов функции enableValidation*/
 enableValidation(settings);
-
-/*Функции открытия попапов*/
-buttonEdit.addEventListener('click', function() {
-  openPopup(popupProfile);
-  nameValue.value = nameuserProfile.textContent;
-  jobValue.value = jobuserProfile.textContent;
-});
-
-buttonAdd.addEventListener('click', function() {
-  disableSubmitButton(settings, popupSubmitCard);
-  hideInputError(popupPlace, settings);
-  popupForm.reset();
-  openPopup(popupPlace);
-});
-
-buttonAvatar.addEventListener('click', function() {
-  openPopup(popupAvatar);
-  avatarValue.value = avatarValue.src;
-  disableSubmitButton(settings, popupSubmitAvatar);
-  hideInputError(popupAvatar, settings);
-});
-
-/*Функции закрытия попапов*/
-buttonCloseProfile.addEventListener('click', function() {
-  closePopup(popupProfile);
-});
-
-buttonClosePlace.addEventListener('click', function() {
- closePopup(popupPlace);
-});
-
-buttonClosePhoto.addEventListener('click', function() {
- closePopup(popupPhoto);
-});
-
-buttonCloseAvatar.addEventListener('click', function() {
-  closePopup(popupAvatar);
- });
-
-popupProfile.addEventListener('mousedown', (evt) => {
-  if (evt.target.classList.contains('popup_opened')) {
-    closePopup(popupProfile);
-  }
-});
-
-popupPlace.addEventListener('mousedown', (evt) => {
-  if (evt.target.classList.contains('popup_opened')) {
-    closePopup(popupPlace);
-  }
-});
-
-popupPhoto.addEventListener('mousedown', (evt) => {
-  if (evt.target.classList.contains('popup_opened')) {
-    closePopup(popupPhoto);
-  }
-});
-
-popupAvatar.addEventListener('mousedown', (evt) => {
-  if (evt.target.classList.contains('popup_opened')) {
-    closePopup(popupAvatar);
-  }
-});
 
 /*Добавление карточки через попап*/
 popupPlace.addEventListener('submit', handleFormSubmitMesto);
@@ -130,3 +68,51 @@ function handleFormSubmitAvatar() {
 popupAvatar.addEventListener('submit', handleFormSubmitAvatar);
 
 export { myProfile };
+
+/*Функции открытия попапов*/
+buttonEdit.addEventListener('click', function() {
+  openPopup(popupProfile);
+  nameValue.value = nameuserProfile.textContent;
+  jobValue.value = jobuserProfile.textContent;
+  /*hideInputError(popupProfile, settings);*/
+});
+
+buttonAdd.addEventListener('click', function() {
+  openPopup(popupPlace);
+  disableSubmitButton(settings, popupSubmitAvatar);
+  popupForm.reset();
+  /*hideInputError(popupPlace, settings);*/
+});
+
+buttonAvatar.addEventListener('click', function() {
+  openPopup(popupAvatar);
+  avatarValue.value = avatarValue.src;
+  disableSubmitButton(settings, popupSubmitAvatar);
+  /*hideInputError(popupAvatar, settings);*/
+});
+
+/*Функции закрытия попапов*/
+buttonCloseProfile.addEventListener('click', function() {
+  closePopup(popupProfile);
+});
+
+buttonClosePlace.addEventListener('click', function() {
+ closePopup(popupPlace);
+});
+
+buttonClosePhoto.addEventListener('click', function() {
+ closePopup(popupPhoto);
+});
+
+buttonCloseAvatar.addEventListener('click', function() {
+  closePopup(popupAvatar);
+ });
+
+/*Закрытие по клику на оверлей*/
+ popupProfile.addEventListener('mousedown', onClickByOverlay);
+
+ popupPlace.addEventListener('mousedown', onClickByOverlay);
+
+ popupPhoto.addEventListener('mousedown', onClickByOverlay);
+
+ popupAvatar.addEventListener('mousedown', onClickByOverlay);

@@ -43,27 +43,33 @@ function toggleButtonState(inputList, buttonElement) {
   }
 }
 
-const setEventListeners = (formElement) => {
+const setEventListeners = (formElement, settings) => {
   const inputList = Array.from(formElement.querySelectorAll(settings.inputSelector));
   const buttonElement = formElement.querySelector(settings.submitButtonSelector);
-  toggleButtonState(inputList, buttonElement);
+  toggleButtonState(inputList, buttonElement, settings);
+  formElement.addEventListener('reset', () => {
+    setTimeout(() => {
+     toggleButtonState(inputList, buttonElement, settings);
+     hideInputError(formElement, settings);
+    }, 0);
+  });
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', function () {
-      checkInputValidity(formElement, inputElement);
-      toggleButtonState(inputList, buttonElement);
+      checkInputValidity(formElement, inputElement, settings);
+      toggleButtonState(inputList, buttonElement, settings);
     });
   });
 };
 
-function enableValidation() {
+function enableValidation(settings) {
   const formList = Array.from(document.querySelectorAll(settings.formSelector));
   formList.forEach((formElement) => {
-  formElement.addEventListener('submit', (evt) => {
-    evt.preventDefault();
+    formElement.addEventListener('submit', (evt) => {
+      evt.preventDefault();
+    });
+    setEventListeners(formElement, settings);
   });
-    setEventListeners(formElement);
-});
-}
+};
 
 /*Функция блокировки кнопки отправки при добавлении карточки*/
 function disableSubmitButton(settings, popupSubmit){
@@ -79,4 +85,4 @@ function hideInputError(formElement, settings) {
   });
 }
 
-export { enableValidation, disableSubmitButton, hideInputError };
+export { enableValidation, disableSubmitButton /*hideInputError*/ };
