@@ -5,12 +5,6 @@ function closeEsc(evt) {
     closePopup(popupOpened);
   }
 }
-/*Закрытие по клику на оверлей*/
-function onClickByOverlay (evt) {
-  if (evt.target.classList.contains('popup_opened')) {
-  closePopup(evt.target);
-  }
- }
 
 /*Функция открытия попапов*/
 function openPopup(popup) {
@@ -24,4 +18,4 @@ function closePopup(popup) {
   document.removeEventListener('keydown', closeEsc);
 }
 
-export { openPopup, closePopup, onClickByOverlay };
+export { openPopup, closePopup };

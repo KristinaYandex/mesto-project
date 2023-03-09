@@ -1,10 +1,10 @@
 import './pages/index.css';
 
 import { enableValidation, disableSubmitButton /*hideInputError*/ } from './components/validate.js'
-import { openPopup, closePopup, onClickByOverlay } from './components/modal.js'
+import { openPopup, closePopup } from './components/modal.js'
 import { handleFormSubmitMesto, createCard } from './components/card.js'
-import { settings, popupProfile, popupPlace, popupPhoto, popupAvatar, buttonEdit, buttonAdd, buttonAvatar, popupForm, popupSubmitCard, buttonCloseProfile, popupSubmitUser, popupSubmitAvatar,
-  buttonClosePlace, buttonClosePhoto, buttonCloseAvatar, nameuserProfile, jobuserProfile, avataruserProfile, nameValue, jobValue, avatarValue, cardContainer } from './components/constants.js'
+import { settings, popupProfile, popupPlace, popupAvatar, buttonEdit, buttonAdd, buttonAvatar, popupForm, popupSubmitCard, popupSubmitUser,
+  popupSubmitAvatar, nameuserProfile, jobuserProfile, avataruserProfile, nameValue, jobValue, avatarValue, cardContainer } from './components/constants.js'
 import { getUserProfile, updateUserProfile, getCards, updateUserAvatar } from './components/api.js'
 
 let myProfile;
@@ -79,7 +79,7 @@ buttonEdit.addEventListener('click', function() {
 
 buttonAdd.addEventListener('click', function() {
   openPopup(popupPlace);
-  disableSubmitButton(settings, popupSubmitAvatar);
+  disableSubmitButton(settings, popupSubmitCard);
   popupForm.reset();
   /*hideInputError(popupPlace, settings);*/
 });
@@ -91,28 +91,15 @@ buttonAvatar.addEventListener('click', function() {
   /*hideInputError(popupAvatar, settings);*/
 });
 
-/*Функции закрытия попапов*/
-buttonCloseProfile.addEventListener('click', function() {
-  closePopup(popupProfile);
+/*Обработчики нажатия на крестик и на оверлей, закрытие*/
+const popups = document.querySelectorAll('.popup');
+popups.forEach((popup) => {
+  popup.addEventListener('click', (evt) => {
+    if (evt.target.classList.contains('popup_opened')) {
+      closePopup(evt.target);
+    }
+    if (evt.target === evt.currentTarget || evt.target.classList.contains('popup__close')) {
+      closePopup(evt.currentTarget);
+    }
+  });
 });
-
-buttonClosePlace.addEventListener('click', function() {
- closePopup(popupPlace);
-});
-
-buttonClosePhoto.addEventListener('click', function() {
- closePopup(popupPhoto);
-});
-
-buttonCloseAvatar.addEventListener('click', function() {
-  closePopup(popupAvatar);
- });
-
-/*Закрытие по клику на оверлей*/
- popupProfile.addEventListener('mousedown', onClickByOverlay);
-
- popupPlace.addEventListener('mousedown', onClickByOverlay);
-
- popupPhoto.addEventListener('mousedown', onClickByOverlay);
-
- popupAvatar.addEventListener('mousedown', onClickByOverlay);
