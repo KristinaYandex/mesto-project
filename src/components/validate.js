@@ -85,4 +85,4 @@ function hideInputError(formElement, settings) {
   });
 }
 
-export { enableValidation, disableSubmitButton /*hideInputError*/ };
+export { enableValidation, disableSubmitButton };

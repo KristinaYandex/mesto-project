@@ -77,7 +77,6 @@ function handleFormSubmitMesto(evt) {
     .then((res) => {
       closePopup(popupPlace);
       cardContainer.prepend(createCard(res.link, res.name, res.likes, res.owner._id, res._id));
-      evt.target.reset();
     })
     .catch((err) => {
       console.log(err);

@@ -4,8 +4,11 @@ const popupProfile = document.querySelector('.popup-profile');
 const popupPlace = document.querySelector('.popup-place');
 const popupPhoto = document.querySelector('.popup-photo');
 const popupAvatar = document.querySelector('.popup-avatar');
+const popups = document.querySelectorAll('.popup');
 /*Форма попапа добавления карточки*/
-const popupForm = popupPlace.querySelector('.popup__form');
+const popupFormPlace = popupPlace.querySelector('.popup__form');
+const popupFormProfile = popupProfile.querySelector('.popup__form');
+const popupFormAvatar = popupAvatar.querySelector('.popup__form');
 /*Кнопка добавления карточи*/
 const popupSubmitUser = popupProfile.querySelector('.popup__submit');
 const popupSubmitCard = popupPlace.querySelector('.popup__submit');
@@ -46,7 +49,7 @@ const settings = {
   errorClass: 'popup__input-error_active'
 }
 
-export { settings, popupProfile, popupPlace, popupPhoto, popupAvatar, popupForm, buttonEdit, buttonAdd, buttonAvatar, popupSubmitCard,
+export { settings, popupProfile, popupPlace, popupPhoto, popupAvatar, popups, popupFormPlace, popupFormProfile, popupFormAvatar, buttonEdit, buttonAdd, buttonAvatar, popupSubmitCard,
   buttonCloseProfile, buttonClosePlace, buttonClosePhoto, popupSubmitAvatar, popupSubmitUser, buttonCloseAvatar, cardContainer,
   userTemplate, namePlaceInput, linkPlaceInput, popupImage, popupDescription, nameuserProfile, jobuserProfile, avataruserProfile,
   nameValue, jobValue, avatarValue };
