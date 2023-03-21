@@ -1,113 +1,98 @@
-/*Функция проверки ответа от сервера на корректность*/
-function serverResponse(res) {
-  if (res.ok) {
-    return res.json();
+export default class Api {
+  constructor(options) {
+    this.url = options.baseUrl,
+    this.headers = options.headers
   }
-  return Promise.reject(`Ошибка: ${res.status}`);
-}
-
-const config = {
-  baseUrl: 'https://nomoreparties.co/v1/plus-cohort-20',
-  headers: {
-    authorization: '9a34fda2-8e98-4dd6-868d-a04801378552',
-    "Content-Type": 'application/json',
-  },
-};
-
-/*Запрос информации о пользователе*/
-function getUserProfile() {
-  return fetch(`${config.baseUrl}/users/me`, {
-    method: 'GET',
-    headers: {
-      authorization: config.headers.authorization
+  /*Функция проверки ответа от сервера на корректность*/
+  serverResponse(res) {
+    if (res.ok) {
+      return res.json();
     }
-  })
-  .then(res => serverResponse(res));
-}
-
-/*Обновление информации о пользователе*/
-function updateUserProfile(nameuserProfile, jobuserProfile) {
-  return fetch(`${config.baseUrl}/users/me`, {
-    method: 'PATCH',
-    headers: config.headers,
-    body: JSON.stringify ({
-      name: nameuserProfile,
-      about: jobuserProfile
+    return Promise.reject(`Ошибка: ${res.status}`);
+  }
+  /*Запрос информации о пользователе*/
+  getUserProfile() {
+    return fetch(`${this.baseUrl}/users/me`, {
+      method: 'GET',
+      headers: {
+        authorization: this.headers.authorization
+      }
     })
-  })
-  .then(res => serverResponse(res));
-}
-
-/*Обновление аватара*/
-function updateUserAvatar(avataruserProfile) {
-  return fetch(`${config.baseUrl}/users/me/avatar`, {
-    method: 'PATCH',
-    headers: config.headers,
-    body: JSON.stringify ({
-      avatar: avataruserProfile
+    .then(res => this.serverResponse(res));
+  }
+  /*Обновление информации о пользователе*/
+  updateUserProfile(nameuserProfile, jobuserProfile) {
+    return fetch(`${this.baseUrl}/users/me`, {
+      method: 'PATCH',
+      headers: this.headers,
+      body: JSON.stringify ({
+        name: nameuserProfile,
+        about: jobuserProfile
+      })
     })
-  })
-  .then(res => serverResponse(res));
-}
-
-/*Запрос карточек с сервера*/
-function getCards() {
-  return fetch('https://nomoreparties.co/v1/plus-cohort-20/cards', {
-    method: 'GET',
-    headers: {
-      authorization: '9a34fda2-8e98-4dd6-868d-a04801378552'
-    }
-  })
-  .then(res => serverResponse(res));
-}
-
-/*Добавление новой карточки*/
-function addNewCard(elementImgPlace, elementTitle) {
-  return fetch('https://nomoreparties.co/v1/plus-cohort-20/cards', {
-    method: 'POST',
-    headers: {
-      authorization: '9a34fda2-8e98-4dd6-868d-a04801378552',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify ({
-      name: elementImgPlace,
-      link: elementTitle
+    .then(res => this.serverResponse(res));
+  }
+  /*Обновление аватара*/
+  updateUserAvatar(avataruserProfile) {
+    return fetch(`${this.baseUrl}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this.headers,
+      body: JSON.stringify ({
+        avatar: avataruserProfile
+      })
     })
-  })
-  .then(res => serverResponse(res));
+    .then(res => this.serverResponse(res));
+  }
+  /*Запрос карточек с сервера*/
+  getCards() {
+    return fetch(`${this.baseUrl}/cards`, {
+      method: 'GET',
+      headers: {
+        authorization: this.headers.authorization
+      }
+    })
+    .then(res => this.serverResponse(res));
+  }
+  /*Добавление новой карточки*/
+  addNewCard(elementImgPlace, elementTitle) {
+    return fetch(`${this.baseUrl}/cards`, {
+      method: 'POST',
+      headers: this.headers,
+      body: JSON.stringify ({
+        name: elementImgPlace,
+        link: elementTitle
+      })
+    })
+    .then(res => this.serverResponse(res));
+  }
+  /*Удаление карточек с сервера*/
+  deleteCards(id) {
+    return fetch(`${this.baseUrl}/cards/${id}`, {
+      method: 'DELETE',
+      headers: {
+        authorization: this.headers.authorization
+      }
+    })
+    .then(res => this.serverResponse(res));
+  }
+  /*Постановка лайка*/
+  putLike(id) {
+    return fetch(`${this.baseUrl}/cards/likes/${id}`, {
+      method: 'PUT',
+      headers: {
+        authorization: this.headers.authorization
+      }
+    })
+    .then(res => this.serverResponse(res));
+  }
+  /*Удалить лайк*/
+  deleteLike(id) {
+    return fetch(`${this.baseUrl}/cards/likes/${id}`, {
+      method: 'DELETE',
+      headers: {
+        authorization: this.headers.authorization
+      }
+    })
+    .then(res => this.serverResponse(res));
+  }
 }
-
-/*Удаление карточек с сервера*/
-function deleteCards(id) {
-  return fetch(`${config.baseUrl}/cards/${id}`, {
-    method: 'DELETE',
-    headers: {
-      authorization: config.headers.authorization
-    }
-  })
-  .then(res => serverResponse(res));
-}
-
-/*Постановка лайка*/
-function putLike(id) {
-  return fetch(`${config.baseUrl}/cards/likes/${id}`, {
-    method: 'PUT',
-    headers: {
-      authorization: config.headers.authorization
-    }
-  })
-  .then(res => serverResponse(res));
-}
-
-/*Удалить лайк*/
-function deleteLike(id) {
-  return fetch(`${config.baseUrl}/cards/likes/${id}`, {
-    method: 'DELETE',
-    headers: {
-      authorization: config.headers.authorization
-    }
-  })
-  .then(res => serverResponse(res));
-}
-
-export { updateUserProfile, getUserProfile,  updateUserAvatar, getCards, addNewCard, deleteCards, putLike, deleteLike };

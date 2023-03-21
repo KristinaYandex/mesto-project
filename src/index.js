@@ -5,7 +5,15 @@ import { openPopup, closePopup } from './components/modal.js'
 import { handleFormSubmitMesto, createCard } from './components/card.js'
 import { settings, popupProfile, popupPlace, popupAvatar, popups, buttonEdit, buttonAdd, buttonAvatar, popupFormPlace, popupFormProfile, popupFormAvatar, popupSubmitCard, popupSubmitUser,
   popupSubmitAvatar, nameuserProfile, jobuserProfile, avataruserProfile, nameValue, jobValue, avatarValue, cardContainer } from './components/constants.js'
-import { getUserProfile, updateUserProfile, getCards, updateUserAvatar } from './components/api.js'
+import { Api } from './components/Api.js'
+
+const api = new Api({
+  baseUrl: 'https://nomoreparties.co/v1/plus-cohort-20',
+  headers: {
+    authorization: '9a34fda2-8e98-4dd6-868d-a04801378552',
+    "Content-Type": 'application/json',
+  },
+});
 
 let myProfile;
 Promise.all([getUserProfile(), getCards()])
