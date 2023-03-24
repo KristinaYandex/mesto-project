@@ -52,4 +52,4 @@ const settings = {
 export { settings, popupProfile, popupPlace, popupPhoto, popupAvatar, popups, popupFormPlace, popupFormProfile, popupFormAvatar, buttonEdit, buttonAdd, buttonAvatar, popupSubmitCard,
   buttonCloseProfile, buttonClosePlace, buttonClosePhoto, popupSubmitAvatar, popupSubmitUser, buttonCloseAvatar, cardContainer,
   userTemplate, namePlaceInput, linkPlaceInput, popupImage, popupDescription, nameuserProfile, jobuserProfile, avataruserProfile,
-  nameValue, jobValue, avatarValue };
+  nameValue, jobValue, avatarValue, popupCardImage };
