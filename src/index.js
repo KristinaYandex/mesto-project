@@ -51,7 +51,7 @@ Promise.all([api.getUserProfile(), api.getCards()])
 enableValidation(settings);
 
 /*Добавление карточки через попап*/
-const handleFormSubmitMesto = new new PopupWithForm(evt, {
+const handleFormSubmitMesto = new PopupWithForm(evt, {
   submit: (res) => {
     popupSubmitCard.textContent = "Сохранение...";
     evt.preventDefault();
@@ -72,7 +72,7 @@ const handleFormSubmitMesto = new new PopupWithForm(evt, {
 /*Добавление карточки через попап*/
 handleFormSubmitMesto.setEventListeners()
 
-/*const handleFormSubmitUser = ({
+const handleFormSubmitUser = new PopupWithForm({
   submit: (res) => {
     popupSubmitUser.textContent = "Сохранение...";
     api.updateUserProfile(res)
@@ -87,10 +87,10 @@ handleFormSubmitMesto.setEventListeners()
       popupSubmitUser.textContent = "Сохранить";
     });
   }
-})*/
+})
 
 /*Редактирование информации о пользователе*/
-/*handleFormSubmitUser.setEventListeners()*/
+handleFormSubmitUser.setEventListeners()
 
 /*Редактирование аватарки*/
 const handleFormSubmitAvatar = new PopupWithForm(evt, {
