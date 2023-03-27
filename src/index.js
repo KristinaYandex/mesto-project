@@ -36,8 +36,8 @@ Promise.all([api.getUserProfile(), api.getCards()])
     }, myProfile = users._id);
     const newSection = new Section ({
       data: cards,
-      renderer: (item) => {
-        const cardElement = newcard.generate();
+      renderer: () => {
+        const cardElement = newCard.generate();
         return cardElement;
       },
     }, cardContainer)
@@ -181,7 +181,7 @@ function handleTrashCard(card) {
   });
 }
 
-const newcard = new Card(link, name, likes, owner, _id, myProfile, userTemplate, {
+const newCard = new Card(link, name, likes, owner, _id, myProfile, userTemplate, {
   handleLikeClick: () => handleLikeClick(evt, _id, api),
   handleTrashCard: () => handleTrashCard(cardElement),
   handleCardClick: () => {
