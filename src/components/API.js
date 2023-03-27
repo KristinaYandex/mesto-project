@@ -1,8 +1,9 @@
 export default class Api {
   constructor(options) {
-    this.url = options.baseUrl,
-    this.headers = options.headers
+    this._url = options.baseUrl,
+    this._headers = options.headers
   }
+
   /*Функция проверки ответа от сервера на корректность*/
   serverResponse(res) {
     if (res.ok) {
@@ -12,19 +13,19 @@ export default class Api {
   }
   /*Запрос информации о пользователе*/
   getUserProfile() {
-    return fetch(`${this.baseUrl}/users/me`, {
+    return fetch(`${this._url}/users/me`, {
       method: 'GET',
       headers: {
-        authorization: this.headers.authorization
+        authorization: this._headers.authorization
       }
     })
     .then(res => this.serverResponse(res));
   }
   /*Обновление информации о пользователе*/
   updateUserProfile(nameuserProfile, jobuserProfile) {
-    return fetch(`${this.baseUrl}/users/me`, {
+    return fetch(`${this._url}/users/me`, {
       method: 'PATCH',
-      headers: this.headers,
+      headers: this._headers,
       body: JSON.stringify ({
         name: nameuserProfile,
         about: jobuserProfile
@@ -34,9 +35,9 @@ export default class Api {
   }
   /*Обновление аватара*/
   updateUserAvatar(avataruserProfile) {
-    return fetch(`${this.baseUrl}/users/me/avatar`, {
+    return fetch(`${this._url}/users/me/avatar`, {
       method: 'PATCH',
-      headers: this.headers,
+      headers: this._headers,
       body: JSON.stringify ({
         avatar: avataruserProfile
       })
@@ -45,19 +46,19 @@ export default class Api {
   }
   /*Запрос карточек с сервера*/
   getCards() {
-    return fetch(`${this.baseUrl}/cards`, {
+    return fetch(`${this._url}/cards`, {
       method: 'GET',
       headers: {
-        authorization: this.headers.authorization
+        authorization: this._headers.authorization
       }
     })
     .then(res => this.serverResponse(res));
   }
   /*Добавление новой карточки*/
   addNewCard(elementImgPlace, elementTitle) {
-    return fetch(`${this.baseUrl}/cards`, {
+    return fetch(`${this._url}/cards`, {
       method: 'POST',
-      headers: this.headers,
+      headers: this._headers,
       body: JSON.stringify ({
         name: elementImgPlace,
         link: elementTitle
@@ -67,30 +68,30 @@ export default class Api {
   }
   /*Удаление карточек с сервера*/
   deleteCards(id) {
-    return fetch(`${this.baseUrl}/cards/${id}`, {
+    return fetch(`${this._url}/cards/${id}`, {
       method: 'DELETE',
       headers: {
-        authorization: this.headers.authorization
+        authorization: this._headers.authorization
       }
     })
     .then(res => this.serverResponse(res));
   }
   /*Постановка лайка*/
   putLike(id) {
-    return fetch(`${this.baseUrl}/cards/likes/${id}`, {
+    return fetch(`${this._url}/cards/likes/${id}`, {
       method: 'PUT',
       headers: {
-        authorization: this.headers.authorization
+        authorization: this._headers.authorization
       }
     })
     .then(res => this.serverResponse(res));
   }
   /*Удалить лайк*/
   deleteLike(id) {
-    return fetch(`${this.baseUrl}/cards/likes/${id}`, {
+    return fetch(`${this._url}/cards/likes/${id}`, {
       method: 'DELETE',
       headers: {
-        authorization: this.headers.authorization
+        authorization: this._headers.authorization
       }
     })
     .then(res => this.serverResponse(res));

@@ -1,5 +1,5 @@
 /*Функция добавления карточек*/
-export class Card {
+export default class Card {
   constructor({link, name, likes, owner, _id, myProfile, handleCardClick, handleTrashCard, handleLikeClick}, templateSelector) {
     this._link = link;
     this._name = name;
@@ -77,3 +77,4 @@ export class Card {
       this._handleTrashCard(this._element)
     });
   }
+}
