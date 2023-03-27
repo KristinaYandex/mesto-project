@@ -36,8 +36,8 @@ Promise.all([api.getUserProfile(), api.getCards()])
     }, myProfile = users._id);
     const newSection = new Section ({
       data: cards,
-      renderer: (item) => {
-        const cardElement = newcard.generate();
+      renderer: () => {
+        const cardElement = newCard.generate();
         return cardElement;
       },
     }, cardContainer)
@@ -51,7 +51,7 @@ Promise.all([api.getUserProfile(), api.getCards()])
 enableValidation(settings);
 
 /*Добавление карточки через попап*/
-const handleFormSubmitMesto = new new PopupWithForm(evt, {
+const handleFormSubmitMesto = new PopupWithForm(evt, {
   submit: (res) => {
     popupSubmitCard.textContent = "Сохранение...";
     evt.preventDefault();
@@ -72,7 +72,7 @@ const handleFormSubmitMesto = new new PopupWithForm(evt, {
 /*Добавление карточки через попап*/
 handleFormSubmitMesto.setEventListeners()
 
-/*const handleFormSubmitUser = ({
+const handleFormSubmitUser = new PopupWithForm({
   submit: (res) => {
     popupSubmitUser.textContent = "Сохранение...";
     api.updateUserProfile(res)
@@ -87,10 +87,10 @@ handleFormSubmitMesto.setEventListeners()
       popupSubmitUser.textContent = "Сохранить";
     });
   }
-})*/
+})
 
 /*Редактирование информации о пользователе*/
-/*handleFormSubmitUser.setEventListeners()*/
+handleFormSubmitUser.setEventListeners()
 
 /*Редактирование аватарки*/
 const handleFormSubmitAvatar = new PopupWithForm(evt, {
@@ -181,7 +181,7 @@ function handleTrashCard(card) {
   });
 }
 
-const newcard = new Card(link, name, likes, owner, _id, myProfile, userTemplate, {
+const newCard = new Card(link, name, likes, owner, _id, myProfile, userTemplate, {
   handleLikeClick: () => handleLikeClick(evt, _id, api),
   handleTrashCard: () => handleTrashCard(cardElement),
   handleCardClick: () => {
