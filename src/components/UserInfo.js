@@ -1,22 +1,25 @@
 /*Редактирование информации о пользователе*/
-class UserInfo {
-  constructor(selectorName, selectorAbout, selectorAvatar, selesctorId) {
-    this.selectorName = document.querySelector(selectorName);
-    this.selectorAbout = document.querySelector(selectorAbout);
-    this.selectorAvatar = document.querySelector(selectorAvatar);
-    this.selesctorId = selesctorId;
+export default class UserInfo {
+  constructor({selectorName, selectorAbout, selectorAvatar}) {
+    this._selectorName = document.querySelector(selectorName);
+    this._selectorAbout = document.querySelector(selectorAbout);
+    this._selectorAvatar = document.querySelector(selectorAvatar);
   }
+
   getUserInfo() {
     return {
-      name: this.selectorName.textContent,
-      about: this.selectorAbout.textContent
+      name: this._selectorName.textContent,
+      about: this._selectorAbout.textContent
     }
   }
-  setUserInfo({name, about, avatar}, id) {
-    this.selectorName.textContent = name;
-    this.selectorAbout.textContent = about;
-    this.selectorAvatar.src = avatar;
-    this.selesctorId = id;
+
+  setUserInfo = ({name, about, avatar}) => {
+    this._name = name;
+    this._about = about;
+    this._avatar = avatar;
+    this._selectorName.textContent = this._name;
+    this._selectorAbout.textContent = this._about;
+    this._selectorAvatar.src = this._avatar;
   }
 }
 
