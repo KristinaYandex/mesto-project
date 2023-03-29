@@ -1,24 +1,24 @@
 import './pages/index.css';
 
-import { enableValidation, disableSubmitButton } from './components/validate.js'
-import { openPopup, closePopup } from './components/Modal.js'
+import FormValidator from './components/FormValidator.js'
 import Card from './components/Card.js'
 import PopupWithImage from './components/PopupWithImage.js'
 import Section from './components/Section.js'
 import { settings, popupProfile, popupPlace, popupAvatar, popups, buttonEdit, buttonAdd, buttonAvatar, popupFormPlace, popupFormProfile, popupFormAvatar, popupSubmitCard, popupSubmitUser,
   popupSubmitAvatar, nameuserProfile, jobuserProfile, avataruserProfile, nameValue, jobValue, avatarValue, cardContainer, userTemplate, popupCardImage } from './components/constants.js'
 import Api from './components/API.js'
+import UserInfo from './components/UserInfo.js'
 
-const api = new Api({
-  url: 'https://nomoreparties.co/v1/plus-cohort-20',
+export const api = new Api({
+  baseUrl: 'https://nomoreparties.co/v1/plus-cohort-20',
   headers: {
     authorization: '9a34fda2-8e98-4dd6-868d-a04801378552',
     'Content-Type': 'application/json'
   }
 });
 
-const ImageCard = new PopupWithImage(popupCardImage)
-ImageCard.setEventListeners();
+/*const ImageCard = new PopupWithImage(popupCardImage)
+ImageCard.setEventListeners();*/
 
 const profileUserInfo = new UserInfo({
   selectorName: nameuserProfile,
@@ -34,14 +34,14 @@ Promise.all([api.getUserProfile(), api.getCards()])
       about: users.about,
       avatar: users.avatar
     }, myProfile = users._id);
-    const newSection = new Section ({
-      data: cards,
-      renderer: () => {
-        const cardElement = newCard.generate();
-        return cardElement;
+    const newSection = new Section({
+      items: cards,
+      renderer: (card) => {
+        const addCard = createCard(card.link, card.name, card.likes, card.owner._id, card._id);
+        newSection.setItem(addCard);
       },
     }, cardContainer)
-    newSection.renderItems(cards)
+    newSection.renderItems()
   })
   .catch((err) => {
     console.log(err); // выводим ошибку в консоль, если запрос неуспешный
@@ -57,7 +57,7 @@ const handleFormSubmitMesto = new PopupWithForm(evt, {
     evt.preventDefault();
     api.addNewCard(res)
     .then((res) => {
-      closePopup(popupPlace);
+      close(popupPlace);
       cardContainer.prepend(createCard(res.link, res.name, res.likes, res.owner._id, res._id));
     })
     .catch((err) => {
@@ -70,14 +70,14 @@ const handleFormSubmitMesto = new PopupWithForm(evt, {
 })
 
 /*Добавление карточки через попап*/
-handleFormSubmitMesto.setEventListeners()
+*handleFormSubmitMesto.setEventListeners()
 
 const handleFormSubmitUser = new PopupWithForm({
   submit: (res) => {
     popupSubmitUser.textContent = "Сохранение...";
     api.updateUserProfile(res)
     .then((res) => {
-      closePopup(popupProfile);
+      close(popupProfile);
       profileUserInfo.setUserInfo(res.name, res.about)
     })
     .catch((err) => {
@@ -102,7 +102,7 @@ const handleFormSubmitAvatar = new PopupWithForm(evt, {
       profileUserInfo.setUserInfo({
         avatar: res.avatar
       });
-      closePopup(popupAvatar);
+      close(popupAvatar);
     })
     .catch((err) => {
       console.log(err);
@@ -116,24 +116,22 @@ const handleFormSubmitAvatar = new PopupWithForm(evt, {
 /*Редактирование аватарки*/
 handleFormSubmitAvatar.setEventListeners()
 
-export { myProfile };
-
 /*Функции открытия попапов*/
 buttonEdit.addEventListener('click', function() {
-  openPopup(popupProfile);
+  open(popupProfile);
   popupFormProfile.reset();
   nameValue.value = nameuserProfile.textContent;
   jobValue.value = jobuserProfile.textContent;
 });
 
 buttonAdd.addEventListener('click', function() {
-  openPopup(popupPlace);
+  open(popupPlace);
   disableSubmitButton(settings, popupSubmitCard);
   popupFormPlace.reset();
 });
 
 buttonAvatar.addEventListener('click', function() {
-  openPopup(popupAvatar);
+  open(popupAvatar);
   avatarValue.value = avatarValue.src;
   disableSubmitButton(settings, popupSubmitAvatar);
   popupFormAvatar.reset();
@@ -143,10 +141,10 @@ buttonAvatar.addEventListener('click', function() {
 popups.forEach((popup) => {
   popup.addEventListener('click', (evt) => {
     if (evt.target.classList.contains('popup_opened')) {
-      closePopup(evt.target);
+      close(evt.target);
     }
     if (evt.target === evt.currentTarget || evt.target.classList.contains('popup__close')) {
-      closePopup(evt.currentTarget);
+      close(evt.currentTarget);
     }
   });
 });
@@ -181,10 +179,16 @@ function handleTrashCard(card) {
   });
 }
 
-const newCard = new Card(link, name, likes, owner, _id, myProfile, userTemplate, {
-  handleLikeClick: () => handleLikeClick(evt, _id, api),
-  handleTrashCard: () => handleTrashCard(cardElement),
-  handleCardClick: () => {
-    ImageCard.openPopup(link, name);
-  }
-})
+function createCard(link, name, likes, owner, _id) {
+  const newCard = new Card(link, name, likes, owner, _id, myProfile, userTemplate, {
+    handleLikeClick: () => handleLikeClick(evt, _id, api),
+    handleTrashCard: () => handleTrashCard(cardElement),
+    handleCardClick: () => {
+    ImageCard.open(link, name);
+    },
+  });
+  const cardElement = newCard.generate();
+  return cardElement;
+}
+
+export { myProfile };

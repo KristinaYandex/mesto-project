@@ -15,9 +15,7 @@ export default class Api {
   getUserProfile() {
     return fetch(`${this._url}/users/me`, {
       method: 'GET',
-      headers: {
-        authorization: this._headers.authorization
-      }
+      headers: this._headers
     })
     .then(res => this.serverResponse(res));
   }
@@ -48,9 +46,7 @@ export default class Api {
   getCards() {
     return fetch(`${this._url}/cards`, {
       method: 'GET',
-      headers: {
-        authorization: this._headers.authorization
-      }
+      headers: this._headers,
     })
     .then(res => this.serverResponse(res));
   }
@@ -70,9 +66,7 @@ export default class Api {
   deleteCards(id) {
     return fetch(`${this._url}/cards/${id}`, {
       method: 'DELETE',
-      headers: {
-        authorization: this._headers.authorization
-      }
+      headers: this._headers,
     })
     .then(res => this.serverResponse(res));
   }
@@ -80,9 +74,7 @@ export default class Api {
   putLike(id) {
     return fetch(`${this._url}/cards/likes/${id}`, {
       method: 'PUT',
-      headers: {
-        authorization: this._headers.authorization
-      }
+      headers: this._headers,
     })
     .then(res => this.serverResponse(res));
   }
@@ -90,9 +82,7 @@ export default class Api {
   deleteLike(id) {
     return fetch(`${this._url}/cards/likes/${id}`, {
       method: 'DELETE',
-      headers: {
-        authorization: this._headers.authorization
-      }
+      headers: this._headers
     })
     .then(res => this.serverResponse(res));
   }
