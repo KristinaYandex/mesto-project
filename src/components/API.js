@@ -1,89 +1,65 @@
 export default class Api {
-  constructor(options) {
-    this._url = options.baseUrl,
-    this._headers = options.headers
+  constructor(data) {
+      this._config = data.apiConfig;
+      this._ways = data.ways;
   }
 
-  /*Функция проверки ответа от сервера на корректность*/
-  serverResponse(res) {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Ошибка: ${res.status}`);
+//Функция ответа
+  _parseResponse(res) {
+      if (res.ok) {
+          return res.json();
+      }
+      return Promise.reject(`Ошибка - ${res.status}`);
   }
-  /*Запрос информации о пользователе*/
-  getUserProfile() {
-    return fetch(`${this._url}/users/me`, {
-      method: 'GET',
-      headers: this._headers
-    })
-    .then(res => this.serverResponse(res));
-  }
-  /*Обновление информации о пользователе*/
-  updateUserProfile(nameuserProfile, jobuserProfile) {
-    return fetch(`${this._url}/users/me`, {
-      method: 'PATCH',
-      headers: this._headers,
-      body: JSON.stringify ({
-        name: nameuserProfile,
-        about: jobuserProfile
+
+//Функция получения данных
+  _getData(way, method, id = '') {
+      return fetch(`${this._config.url}${way}${id}`, {
+          method: method,
+          headers: this._config.headers
       })
-    })
-    .then(res => this.serverResponse(res));
-  }
-  /*Обновление аватара*/
-  updateUserAvatar(avataruserProfile) {
-    return fetch(`${this._url}/users/me/avatar`, {
-      method: 'PATCH',
-      headers: this._headers,
-      body: JSON.stringify ({
-        avatar: avataruserProfile
+          .then(res =>this._parseResponse(res));
+  };
+
+//Функция создания
+  _createData(way, formInfo, method) {
+      return fetch(`${this._config.url}${way}`, {
+          method: method,
+          headers: this._config.headers,
+          body: JSON.stringify(formInfo)
       })
-    })
-    .then(res => this.serverResponse(res));
+          .then(res =>this._parseResponse(res));
+  };
+
+  getUser() {
+      return this._getData(this._ways.profile, 'GET');
   }
-  /*Запрос карточек с сервера*/
+
   getCards() {
-    return fetch(`${this._url}/cards`, {
-      method: 'GET',
-      headers: this._headers,
-    })
-    .then(res => this.serverResponse(res));
+      return this._getData(this._ways.cards, 'GET');
   }
-  /*Добавление новой карточки*/
-  addNewCard(elementImgPlace, elementTitle) {
-    return fetch(`${this._url}/cards`, {
-      method: 'POST',
-      headers: this._headers,
-      body: JSON.stringify ({
-        name: elementImgPlace,
-        link: elementTitle
-      })
-    })
-    .then(res => this.serverResponse(res));
+
+  deleteCard(id) {
+      return this._getData(this._ways.cardsDelete, 'DELETE', id);
   }
-  /*Удаление карточек с сервера*/
-  deleteCards(id) {
-    return fetch(`${this._url}/cards/${id}`, {
-      method: 'DELETE',
-      headers: this._headers,
-    })
-    .then(res => this.serverResponse(res));
+
+  changeProfile(data) {
+      return this._createData(this._ways.profile, data, 'PATCH');
   }
-  /*Постановка лайка*/
-  putLike(id) {
-    return fetch(`${this._url}/cards/likes/${id}`, {
-      method: 'PUT',
-      headers: this._headers,
-    })
-    .then(res => this.serverResponse(res));
+
+  createCard(data) {
+      return this._createData(this._ways.cards, data, 'POST');
   }
-  /*Удалить лайк*/
+
+  createAvatar(data) {
+      return this.createData(this._ways.avatar, data, 'PATCH');
+  }
+
   deleteLike(id) {
-    return fetch(`${this._url}/cards/likes/${id}`, {
-      method: 'DELETE',
-      headers: this._headers
-    })
-    .then(res => this.serverResponse(res));
+      return this._getData(this._ways.cardsLikes, 'DELETE', id);
+  }
+
+  addLike(id) {
+      return this._getData(this._ways.cardsLikes, 'PUT', id);
   }
 }

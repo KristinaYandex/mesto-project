@@ -5,3 +5,8 @@
   object-fit: cover;
   object-position: center;
 }
+
+.element__img-place:hover {
+  cursor: pointer;
+}
+
