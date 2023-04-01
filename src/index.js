@@ -76,10 +76,7 @@ const formAvatar = new FormValidator(constants.validationConfig, constants.formA
 const forms = [formInfo, formCard, formAvatar];
 forms.forEach(form => form.enableValidation());
 
-const resetValidation = ((input, formClass, form) => {
-  const errorElement = form.querySelector(`#error-${input.id}`);
-  formClass.hideInputError(input, errorElement);
-})
+
 
 //Аватарка
 const avatarPopup = new PopupWithForm(constants.popups.avatar, {
@@ -87,7 +84,7 @@ const avatarPopup = new PopupWithForm(constants.popups.avatar, {
       avatarPopup.setSubmitButtonText('Сохранение...');
       getApi.createAvatar(data)
       .then((data) => {
-          profileUserInfo.setUserAvatar(data);
+          profileUserInfo.setUserInfo(data);
           avatarPopup.close();
       })
       .catch(err => {console.log(err)})
@@ -95,15 +92,14 @@ const avatarPopup = new PopupWithForm(constants.popups.avatar, {
           avatarPopup.setSubmitButtonText('Сохранить');
       });
   }
-  }, {
-  deleteErrors: (input) => {resetValidation(input, formAvatar, constants.formAvatar)}
-});
+  });
 avatarPopup.setEventListeners();
 
 //Открытие аватарки
 constants.buttons.avatar.addEventListener('click', () => {
-  avatarPopup.open();
+  formAvatar.hideInputErrorForm();
   formAvatar.disableButton();
+  avatarPopup.open();
 });
 
 
@@ -121,16 +117,14 @@ const profilePopup = new PopupWithForm(constants.popups.profile, {
           profilePopup.setSubmitButtonText('Сохранить');
       });
   }
-  }, {
-  deleteErrors: (input) => {resetValidation(input, formInfo, constants.formInfo)}
-});
+  });
 profilePopup.setEventListeners();
 
 //Открытие профиля
 constants.buttons.profile.addEventListener('click', () => {
+  formInfo.hideInputErrorForm();
   profilePopup.open();
   profilePopup.setInputValues(profileUserInfo.getUserInfo());
-  formInfo.enableButton();
 });
 
 //Сохранение карточки
@@ -147,13 +141,12 @@ const cardAddPopup = new PopupWithForm(constants.popups.card, {
           cardAddPopup.setSubmitButtonText('Создать');
       });
   }
-  }, {
-  deleteErrors: (input) => {resetValidation(input, formCard, constants.formCard)}
-});
+  });
 cardAddPopup.setEventListeners();
 
 //Открытие карточки
 constants.buttons.card.addEventListener('click', () => {
-  cardAddPopup.open();
+  formCard.hideInputErrorForm();
   formCard.disableButton();
+  cardAddPopup.open();
 });
