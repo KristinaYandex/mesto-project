@@ -1,99 +1,89 @@
-export default class Card {
-  constructor({name, link, _id, likes, owner}, {handleCardClick}, {handleLikeClick}, {handleDelete}, userId, templateSelector) {
-      this._name = name;
-      this._link = link;
-      this._id = _id;
-      this._likes = likes;
-      this._owner = owner;
-      this._handleCardClick = handleCardClick;    //открытие попапа с картинкой
-      this._handleLikeClick = handleLikeClick;    //нажатие на лайк
-      this._handleDelete = handleDelete;  //нажатие на корзину
-      this._userId = userId;
-      this._templateSelector = templateSelector;
-  }
+import { popupPhoto, popupPlace, userTemplate, popupImage, popupDescription, cardContainer, namePlaceInput, linkPlaceInput, popupSubmitCard } from './constants.js'
+import { openPopup, closePopup } from './modal.js'
+import { addNewCard, deleteCards, putLike, deleteLike } from './api.js'
+import { myProfile } from '../index.js'
 
-  //Метод извлекает шаблон из разметки из DOM
-  _getElement() {
-      return document
-          .querySelector(this._templateSelector)
-          .content
-          .querySelector('.element')
-          .cloneNode(true);
-  }
+/*Функция добавления карточек*/
+function createCard(link, name, likes, owner, id) {
+  const userElement = userTemplate.querySelector('.element').cloneNode(true);
+  const cardDelete = userElement.querySelector('.element__trash'); /*Кнопка удаления карточек*/
+  const elementHeartCounter = userElement.querySelector('.element__heart-counter'); /Счётчик лайков*/
+  const elementImgPlace = userElement.querySelector('.element__img-place');
+  const elementTitle = userElement.querySelector('.element__title');
+  elementTitle.textContent = name;
+  elementImgPlace.src = link;
+  elementImgPlace.alt = name;
+  /*Лайки карточек*/
+  const mylike = userElement.querySelector('.element__heart');
+  elementHeartCounter.textContent = likes.length; /*передаем в счетчик лайков длину массива лайков*/
 
-  // Метод добавит данные в разметку
-  generate() {
-      this._card = this._getElement();
-      this._cardImage = this._card.querySelector('.element__img-place');
-      this._cardText = this._card.querySelector('.element__title');
-      this._cardLike = this._card.querySelector('.element__heart');
-      this._buttonLike = this._card.querySelector('.element__heart-counter');
-      this._cardRemove = this._card.querySelector('.element__trash');
-      this._isLiked();
-
-      //Функция удаления корзины
-      if (this._userId !== this._owner._id) {
-          this._cardRemove.remove();
-      }
-
-      this._cardImage.src = this._link;
-      this._cardImage.alt = this._name;
-      this._cardText.textContent = this._name;
-      this._card.dataset.id = this._id;
-      this._buttonLike.textContent = this._likes.length;
-
-
-      this.setEventListeners();
-
-
-      return this._card;
-  }
-
-  //Слушатели событий
-  setEventListeners() {
-      this._cardLike.addEventListener('click', () => {
-          this._handleLikeClick(this._card, this._id);
-      });
-
-      //Удаление карточки
-      if (this._cardRemove) {
-        this._cardRemove.addEventListener("click", () => {
-          this._handleDelete(this._id);
-
+  mylike.addEventListener('click', function(evt) {
+    if (!evt.target.classList.contains('element__heart_active')) {
+      putLike(id)
+        .then((res) => {
+          elementHeartCounter.textContent = res.likes.length;
+          evt.target.classList.toggle('element__heart_active');
+        })
+        .catch((err) => {
+          console.log(err);
         });
-      }
+    } else {
+      deleteLike(id)
+        .then((res) => {
+          elementHeartCounter.textContent = res.likes.length;
+          evt.target.classList.remove('element__heart_active');
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  });
+  likes.forEach((user) => {
+    if (user._id === myProfile) {
+      mylike.classList.add('element__heart_active');
+    }
+  })
 
-      // При клике на карточку открыть картинку во всплывающем окне
-      this._cardImage.addEventListener('click', () => {
-          this._handleCardClick(this._name, this._link);
+  /*Открытие карточек*/
+  elementImgPlace.addEventListener('click', function() {
+    popupImage.src = link;
+    popupImage.alt = name;
+    popupDescription.textContent = name;
+    openPopup(popupPhoto);
+  });
+
+  if (owner !== myProfile) {
+    cardDelete.classList.add('element__trash_inactive');
+  }
+
+  /*Удаление карточек*/
+  cardDelete.addEventListener('click', (e) => {
+    deleteCards(id)
+      .then (() => {
+        e.target.closest('.element').remove();
+      })
+      .catch((err) => {
+        console.log(err); // выводим ошибку в консоль, если запрос неуспешный
       });
-  }
+  });
+  return userElement;
+};
 
-  // Проверяем поставлен ли лайк
-  _isLiked() {
-      if (this._likes.some(like => like._id === this._userId)) {
-          this._cardLike.classList.add('element__heart_active');
-          this._card.dataset.isLiked = 'true';
-      } else {
-          this._card.dataset.isLiked = 'false';
-      }
-  }
-
-  deleteLike(res) {
-      this._cardLike.classList.remove('element__heart_active');
-      this._buttonLike.textContent = res.likes.length;
-      this._card.dataset.isLiked = 'false';
-  }
-  addLike(res) {
-      this._cardLike.classList.add('element__heart_active');
-      this._buttonLike.textContent = res.likes.length;
-      this._card.dataset.isLiked = 'true';
-  }
-  deleteCard() {
-    this._card.remove();
-  }
+/*Добавление карточки через попап*/
+function handleFormSubmitMesto(evt) {
+  popupSubmitCard.textContent = "Сохранение...";
+  evt.preventDefault();
+  return addNewCard(namePlaceInput.value, linkPlaceInput.value)
+    .then((res) => {
+      closePopup(popupPlace);
+      cardContainer.prepend(createCard(res.link, res.name, res.likes, res.owner._id, res._id));
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      popupSubmitCard.textContent = "Сохранить";
+    });
 }
 
-
-
-
+export { handleFormSubmitMesto, createCard };
