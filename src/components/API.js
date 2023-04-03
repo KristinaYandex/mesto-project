@@ -1,113 +1,69 @@
-/*Функция проверки ответа от сервера на корректность*/
-function serverResponse(res) {
-  if (res.ok) {
-    return res.json();
+export default class Api {
+  constructor(data) {
+      this._config = data.apiConfig;
+      this._ways = data.ways;
   }
-  return Promise.reject(`Ошибка: ${res.status}`);
+
+//Функция ответа
+  _parseResponse(res) {
+      if (res.ok) {
+          return res.json();
+      }
+      return Promise.reject(new Error(`Ошибка - ${res.status}`));
+  }
+
+//Функция получения данных
+  _getData(way, method, id = '') {
+      return fetch(`${this._config.url}${way}${id}`, {
+          method: method,
+          headers: this._config.headers
+      })
+          .then(res =>this._parseResponse(res));
+  };
+
+//Функция создания
+  _createData(way, formInfo, method) {
+      return fetch(`${this._config.url}${way}`, {
+          method: method,
+          headers: this._config.headers,
+          body: JSON.stringify(formInfo)
+      })
+          .then(res =>this._parseResponse(res));
+  };
+
+  getUser() {
+      return this._getData(this._ways.profile, 'GET');
+  }
+
+  getCards() {
+      return this._getData(this._ways.cards, 'GET');
+  }
+
+  deleteCard(id) {
+      return this._getData(this._ways.cardsDelete, 'DELETE', id);
+  }
+
+  changeProfile(data) {
+      return this._createData(this._ways.profile, data, 'PATCH');
+  }
+
+  createCard(data) {
+      return this._createData(this._ways.cards, data, 'POST');
+  }
+
+  createAvatar(data) {
+      return this._createData(this._ways.avatar, data, 'PATCH');
+  }
+
+  deleteLike(id) {
+      return this._getData(this._ways.cardsLikes, 'DELETE', id);
+  }
+
+  addLike(id) {
+      return this._getData(this._ways.cardsLikes, 'PUT', id);
+  }
 }
 
-const config = {
-  baseUrl: 'https://nomoreparties.co/v1/plus-cohort-20',
-  headers: {
-    authorization: '9a34fda2-8e98-4dd6-868d-a04801378552',
-    "Content-Type": 'application/json',
-  },
-};
 
-/*Запрос информации о пользователе*/
-function getUserProfile() {
-  return fetch(`${config.baseUrl}/users/me`, {
-    method: 'GET',
-    headers: {
-      authorization: config.headers.authorization
-    }
-  })
-  .then(res => serverResponse(res));
-}
 
-/*Обновление информации о пользователе*/
-function updateUserProfile(nameuserProfile, jobuserProfile) {
-  return fetch(`${config.baseUrl}/users/me`, {
-    method: 'PATCH',
-    headers: config.headers,
-    body: JSON.stringify ({
-      name: nameuserProfile,
-      about: jobuserProfile
-    })
-  })
-  .then(res => serverResponse(res));
-}
 
-/*Обновление аватара*/
-function updateUserAvatar(avataruserProfile) {
-  return fetch(`${config.baseUrl}/users/me/avatar`, {
-    method: 'PATCH',
-    headers: config.headers,
-    body: JSON.stringify ({
-      avatar: avataruserProfile
-    })
-  })
-  .then(res => serverResponse(res));
-}
-
-/*Запрос карточек с сервера*/
-function getCards() {
-  return fetch('https://nomoreparties.co/v1/plus-cohort-20/cards', {
-    method: 'GET',
-    headers: {
-      authorization: '9a34fda2-8e98-4dd6-868d-a04801378552'
-    }
-  })
-  .then(res => serverResponse(res));
-}
-
-/*Добавление новой карточки*/
-function addNewCard(elementImgPlace, elementTitle) {
-  return fetch('https://nomoreparties.co/v1/plus-cohort-20/cards', {
-    method: 'POST',
-    headers: {
-      authorization: '9a34fda2-8e98-4dd6-868d-a04801378552',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify ({
-      name: elementImgPlace,
-      link: elementTitle
-    })
-  })
-  .then(res => serverResponse(res));
-}
-
-/*Удаление карточек с сервера*/
-function deleteCards(id) {
-  return fetch(`${config.baseUrl}/cards/${id}`, {
-    method: 'DELETE',
-    headers: {
-      authorization: config.headers.authorization
-    }
-  })
-  .then(res => serverResponse(res));
-}
-
-/*Постановка лайка*/
-function putLike(id) {
-  return fetch(`${config.baseUrl}/cards/likes/${id}`, {
-    method: 'PUT',
-    headers: {
-      authorization: config.headers.authorization
-    }
-  })
-  .then(res => serverResponse(res));
-}
-
-/*Удалить лайк*/
-function deleteLike(id) {
-  return fetch(`${config.baseUrl}/cards/likes/${id}`, {
-    method: 'DELETE',
-    headers: {
-      authorization: config.headers.authorization
-    }
-  })
-  .then(res => serverResponse(res));
-}
-
-export { updateUserProfile, getUserProfile,  updateUserAvatar, getCards, addNewCard, deleteCards, putLike, deleteLike };

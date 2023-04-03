@@ -1,55 +1,58 @@
-/*Объявления констант*/
-/*Попапы*/
-const popupProfile = document.querySelector('.popup-profile');
-const popupPlace = document.querySelector('.popup-place');
-const popupPhoto = document.querySelector('.popup-photo');
-const popupAvatar = document.querySelector('.popup-avatar');
-const popups = document.querySelectorAll('.popup');
-/*Форма попапа добавления карточки*/
-const popupFormPlace = popupPlace.querySelector('.popup__form');
-const popupFormProfile = popupProfile.querySelector('.popup__form');
-const popupFormAvatar = popupAvatar.querySelector('.popup__form');
-/*Кнопка добавления карточи*/
-const popupSubmitUser = popupProfile.querySelector('.popup__submit');
-const popupSubmitCard = popupPlace.querySelector('.popup__submit');
-const popupSubmitAvatar = popupAvatar.querySelector('.popup__submit');
-/*Кнопки открытия попапов*/
-const buttonEdit = document.querySelector('.profile__edit-button');
-const buttonAdd = document.querySelector('.profile__add-button');
-const buttonAvatar = document.querySelector('.profile__avatar-button');
-/*Кнопки закрытия попапов*/
-const buttonCloseProfile = popupProfile.querySelector('.popup__close');
-const buttonClosePlace = popupPlace.querySelector('.popup__close');
-const buttonClosePhoto = popupPhoto.querySelector('.popup__close');
-const buttonCloseAvatar = popupAvatar.querySelector('.popup__close');
-/*Добавление карточек начальное*/
-const cardContainer = document.querySelector('.elements');
-const userTemplate = document.querySelector('#templates').content;
-/*Открытие карточек*/
-const popupCardImage = popupPhoto.querySelector('.popup__card-image');
-const popupImage = popupPhoto.querySelector('.popup__image');
-const popupDescription = popupPhoto.querySelector('.popup__description');
-/*Редактирование информации о пользователе*/
-const nameuserProfile = document.querySelector('.profile__name');
-const jobuserProfile = document.querySelector('.profile__description');
-const avataruserProfile = document.querySelector('.profile__avatar');
-const nameValue = popupProfile.querySelector('.popup__user-name');
-const jobValue = popupProfile.querySelector('.popup__user-job');
-const avatarValue = popupAvatar.querySelector('.popup__user-avatar');
-/*Добавление карточки через попап*/
-const namePlaceInput = popupPlace.querySelector('.popup__place-name');
-const linkPlaceInput = popupPlace.querySelector('.popup__place-photo');
+export const formInfo = document.querySelector('#edit-profile');
+export const formCard = document.querySelector('#add-card');
+export const formAvatar = document.querySelector('#avatar-edit');
+export const cardContainer = '.elements';
+export const templateSelector = '#templates';
 
-const settings = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__submit',
-  inactiveButtonClass: 'popup__submit_inactive',
-  inputErrorClass: 'popup__input_invalid',
-  errorClass: 'popup__input-error_active'
+//Кнопки
+export const buttons = {
+    profile: document.querySelector('.profile__edit-button'),
+    card: document.querySelector('.profile__add-button'),
+    avatar: document.querySelector('.profile__avatar-button'),
+    delete: document.querySelector('.element__trash')
+}
+//Попапы
+export const popups = {
+    profile: '.popup-profile',
+    card: '.popup-place',
+    avatar: '.popup-avatar',
+    image: '.popup-photo'
 }
 
-export { settings, popupProfile, popupPlace, popupPhoto, popupAvatar, popups, popupFormPlace, popupFormProfile, popupFormAvatar, buttonEdit, buttonAdd, buttonAvatar, popupSubmitCard,
-  buttonCloseProfile, buttonClosePlace, buttonClosePhoto, popupSubmitAvatar, popupSubmitUser, buttonCloseAvatar, cardContainer,
-  userTemplate, namePlaceInput, linkPlaceInput, popupImage, popupDescription, nameuserProfile, jobuserProfile, avataruserProfile,
-  nameValue, jobValue, avatarValue };
+//Селекторы
+export const selectors = {
+  selectorName: '.profile__name',
+  selectorAbout: '.profile__description',
+  selectorAvatar: '.profile__avatar'
+}
+
+//Пути
+export const ways = {
+    profile: '/users/me',
+    cards: '/cards',
+    cardsDelete: '/cards/',
+    cardsLikes: '/cards/likes/',
+    avatar: '/users/me/avatar'
+}
+
+//Информация с сервера
+export const apiConfig = {
+  url: 'https://nomoreparties.co/v1/plus-cohort-20',
+    headers: {
+        authorization: '9a34fda2-8e98-4dd6-868d-a04801378552',
+        'Content-Type': 'application/json'
+    }
+}
+//Формы и поля валидации
+export const validationConfig = {
+    formSelector: '.popup__form',
+    inputSelector: '.popup__input',
+    inputErrorClass: 'popup__input_invalid',
+    errorClass: 'popup__input-error_active',
+    buttonSelector: '.popup__submit',
+    buttonDisabledClass: 'popup__submit_inactive'
+}
+
+
+
+
