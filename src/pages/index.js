@@ -1,15 +1,14 @@
-import './pages/index.css';
+import './index.css';
 
-import * as constants from './components/constants.js';
+import * as constants from '../utils/Constants.js';
 
-import Api from './components/API.js';
-import Card from './components/Card.js';
-import FormValidator from './components/FormValidator.js';
-import PopupWithImage from './components/PopupWithImage.js';
-import PopupWithForm from './components/PopupWithForm.js';
-import UserInfo from './components/UserInfo.js';
-import Section from './components/Section.js';
-
+import Api from '../components/Api.js';
+import Card from '../components/Card.js';
+import FormValidator from '../components/FormValidator.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import UserInfo from '../components/UserInfo.js';
+import Section from '../components/Section.js';
 
 
 const getApi = new Api(constants);
@@ -17,7 +16,7 @@ const userApi = getApi.getUser();
 const cardsApi = getApi.getCards();
 
 //Профиль
-const profileUserInfo = new UserInfo (constants.selectors);
+const profileUserInfo = new UserInfo (constants.userProfile);
 
 //Постановка лайка
 const handleLikeClick = (card, id, cardChange) => {
@@ -26,20 +25,29 @@ const handleLikeClick = (card, id, cardChange) => {
           .then((res) => {
             cardChange.deleteLike(res);
           })
-          .catch(err => {console.log(err)});
+          .catch((err) => {
+            console.log(err);
+          })
   } else {
       getApi.addLike(id)
           .then((res) => {
             cardChange.addLike(res);
           })
-          .catch(err => {console.log(err)});
+          .catch((err) => {
+            console.log(err);
+          })
   }
 }
 
 //Удаление карточки
 const handleDelete = (id, cardChange) => {
-  getApi.deleteCard(id). then(() => {cardChange.deleteCard()});
-
+  getApi.deleteCard(id)
+    .then(() => {
+      cardChange.deleteCard();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
 }
 
 //Попап с развернутой картинкой
@@ -55,7 +63,7 @@ const newCard = new Section({
           handleLikeClick: (card, id) => {handleLikeClick(card, id, cardChange)}
           }, {
           handleDelete: (id) => {handleDelete(id, cardChange)}
-          }, userId, constants.templateSelector);
+          }, userId, constants.template);
       return cardChange.generate();
   }
 }, constants.cardContainer);
@@ -67,7 +75,9 @@ Promise.all([userApi, cardsApi])
       profileUserInfo.setUserInfo(user);
       newCard.renderItems(cards, user._id);
     })
-    .catch(err => {console.log(err)});
+    .catch((err) => {
+      console.log(err);
+    })
 
 // Вызываем функцию из валидации
 const formInfo = new FormValidator(constants.validationConfig, constants.formInfo);
@@ -75,8 +85,6 @@ const formCard = new FormValidator(constants.validationConfig, constants.formCar
 const formAvatar = new FormValidator(constants.validationConfig, constants.formAvatar);
 const forms = [formInfo, formCard, formAvatar];
 forms.forEach(form => form.enableValidation());
-
-
 
 //Аватарка
 const avatarPopup = new PopupWithForm(constants.popups.avatar, {
@@ -87,7 +95,9 @@ const avatarPopup = new PopupWithForm(constants.popups.avatar, {
           profileUserInfo.setUserInfo(data);
           avatarPopup.close();
       })
-      .catch(err => {console.log(err)})
+      .catch((err) => {
+        console.log(err);
+      })
       .finally(() => {
           avatarPopup.setSubmitButtonText('Сохранить');
       });
@@ -112,7 +122,9 @@ const profilePopup = new PopupWithForm(constants.popups.profile, {
           profileUserInfo.setUserInfo(data);
           profilePopup.close();
       })
-      .catch(err => {console.log(err)})
+      .catch((err) => {
+        console.log(err);
+      })
       .finally(() => {
           profilePopup.setSubmitButtonText('Сохранить');
       });
@@ -136,7 +148,9 @@ const cardAddPopup = new PopupWithForm(constants.popups.card, {
           newCard.renderItem(data, data.owner._id);
           cardAddPopup.close();
       })
-      .catch(err => {console.log(err)})
+      .catch((err) => {
+        console.log(err);
+      })
       .finally(() => {
           cardAddPopup.setSubmitButtonText('Создать');
       });

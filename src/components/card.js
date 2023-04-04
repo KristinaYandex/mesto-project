@@ -1,5 +1,5 @@
 export default class Card {
-  constructor({name, link, _id, likes, owner}, {handleCardClick}, {handleLikeClick}, {handleDelete}, userId, templateSelector) {
+  constructor({name, link, _id, likes, owner}, {handleCardClick}, {handleLikeClick}, {handleDelete}, userId, template) {
       this._name = name;
       this._link = link;
       this._id = _id;
@@ -9,13 +9,13 @@ export default class Card {
       this._handleLikeClick = handleLikeClick;    //нажатие на лайк
       this._handleDelete = handleDelete;  //нажатие на корзину
       this._userId = userId;
-      this._templateSelector = templateSelector;
+      this._template = template;
   }
 
   //Метод извлекает шаблон из разметки из DOM
   _getElement() {
       return document
-          .querySelector(this._templateSelector)
+          .querySelector(this._template)
           .content
           .querySelector('.element')
           .cloneNode(true);

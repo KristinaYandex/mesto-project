@@ -2,7 +2,7 @@ export const formInfo = document.querySelector('#edit-profile');
 export const formCard = document.querySelector('#add-card');
 export const formAvatar = document.querySelector('#avatar-edit');
 export const cardContainer = '.elements';
-export const templateSelector = '#templates';
+export const template = '#templates';
 
 //Кнопки
 export const buttons = {
@@ -20,10 +20,10 @@ export const popups = {
 }
 
 //Селекторы
-export const selectors = {
-  selectorName: '.profile__name',
-  selectorAbout: '.profile__description',
-  selectorAvatar: '.profile__avatar'
+export const userProfile = {
+  profileName: '.profile__name',
+  profileAbout: '.profile__description',
+  profileAvatar: '.profile__avatar'
 }
 
 //Пути
@@ -45,11 +45,11 @@ export const apiConfig = {
 }
 //Формы и поля валидации
 export const validationConfig = {
-    formSelector: '.popup__form',
-    inputSelector: '.popup__input',
+    formName: '.popup__form',
+    inputName: '.popup__input',
     inputErrorClass: 'popup__input_invalid',
     errorClass: 'popup__input-error_active',
-    buttonSelector: '.popup__submit',
+    buttonName: '.popup__submit',
     buttonDisabledClass: 'popup__submit_inactive'
 }
 

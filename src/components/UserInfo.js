@@ -1,15 +1,15 @@
 /*Редактирование информации о пользователе*/
 export default class UserInfo {
-  constructor({selectorName, selectorAbout, selectorAvatar}) {
-    this._selectorName = document.querySelector(selectorName);
-    this._selectorAbout = document.querySelector(selectorAbout);
-    this._selectorAvatar = document.querySelector(selectorAvatar);
+  constructor({profileName, profileAbout, profileAvatar}) {
+    this._profileName = document.querySelector(profileName);
+    this._profileAbout = document.querySelector(profileAbout);
+    this._profileAvatar = document.querySelector(profileAvatar);
   }
 
   getUserInfo() {
     return {
-      name: this._selectorName.textContent,
-      about: this._selectorAbout.textContent
+      name: this._profileName.textContent,
+      about: this._profileAbout.textContent
     }
   }
 
@@ -17,9 +17,9 @@ export default class UserInfo {
     this._name = name;
     this._about = about;
     this._avatar = avatar;
-    this._selectorName.textContent = this._name;
-    this._selectorAbout.textContent = this._about;
-    this._selectorAvatar.src = this._avatar;
+    this._profileName.textContent = this._name;
+    this._profileAbout.textContent = this._about;
+    this._profileAvatar.src = this._avatar;
   }
 }
 
