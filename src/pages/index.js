@@ -1,6 +1,6 @@
 import './index.css';
 
-import * as constants from '../utils/Constants.js';
+import * as constants from '../utils/constants.js';
 
 import Api from '../components/Api.js';
 import Card from '../components/Card.js';
