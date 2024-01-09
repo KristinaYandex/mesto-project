@@ -17,8 +17,11 @@
 - Flexbox;
 - Grid Layout;
 - медиазапросы;
+
 - JavaScript (ООП);
 - встроенная браузерная валидация форм и валидация JavaScript;
 - модульность кода;
 - сборка проекта Webpack
 - API.
+
+![2024-01-09_11-39-34](https://github.com/KristinaYandex/mesto-project/assets/115872997/41c1be77-32ff-4c64-a872-1bef728a62f8)
