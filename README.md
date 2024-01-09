@@ -24,4 +24,4 @@
 - сборка проекта Webpack
 - API.
 
-![2024-01-09_11-39-34](https://github.com/KristinaYandex/mesto-project/assets/115872997/41c1be77-32ff-4c64-a872-1bef728a62f8)
+![2024-01-09_11-39-34](https://github.com/KristinaYandex/mesto-project/assets/115872997/a970fad3-e309-47fc-8e61-139f6874b662)
