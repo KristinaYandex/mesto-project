@@ -24,3 +24,6 @@
 - модульность кода;
 - сборка проекта Webpack
 - API.
+
+# Демонстрация проекта на GitHub Pages:
+https://kristinayandex.github.io/mesto-project/
